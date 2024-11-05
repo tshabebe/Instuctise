@@ -4,6 +4,7 @@ import { createInsertSchema } from "drizzle-zod";
 export const userTable = pgTable("user", {
   id: text("id").primaryKey(),
   name: text("name"),
+  username: text("username"),
   email: text("email").unique(),
   userRole: text("user_role", { enum: ["admin", "user", "student"] }),
   avatorUrl: text("avator_url"),

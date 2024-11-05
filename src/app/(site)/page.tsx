@@ -1,18 +1,50 @@
+'use client';
 import { Button } from '@/primitives/button';
+import Link from 'next/link';
+import { useState } from 'react';
+import BounceLoader from './_components/loader';
 
 export default function LandingPage() {
+  const [pending, setPending] = useState<boolean>(false);
   return (
-    <div className="min-h-screen bg-gradient-to-t from-indigo-app to-background pt-2">
+    <div className="min-h-screen bg-gradient-to-b">
       <header>
-        <div className="container flex items-center justify-between gap-2">
-          <div>Insturctise</div>
-          <div className="ml-auto">features</div>
-          <div>blog</div>
-          <Button size={'sm'}>sign up</Button>
+        <div className="container flex items-center gap-4 pt-4">
+          <div className="flex items-center gap-2">
+            {/* <LogoItem /> */}
+            <div className="">Insturctise</div>
+          </div>
+          <nav className="grow flex items-center justify-center gap-2">
+            <div className="hover:text-foreground">
+              <Button variant={'ghost'}>pricing</Button>
+            </div>
+            <div className="hover:text-foreground">
+              <Button variant={'ghost'}>FAQ</Button>
+            </div>
+          </nav>
+          <Link href={'/login'}>
+            <Button
+              variant={'outline'}
+              onClick={() => {
+                setPending(true);
+              }}
+            >
+              {pending ? <BounceLoader /> : <>Get started</>}
+            </Button>
+          </Link>
         </div>
       </header>
       <main>
-        <div className="text-8xl">hello world</div>
+        <section>
+          <div className="container flex justify-center gap-12 pt-36">
+            <p className="font-extrabold text-7xl">
+              Ease of{' '}
+              <span className="bg-foreground-muted text-background font-extrabold text-7xl px-2">
+                Instructors
+              </span>
+            </p>
+          </div>
+        </section>
       </main>
     </div>
   );

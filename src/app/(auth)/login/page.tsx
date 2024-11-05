@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
-import { validateSession } from "@/auth/auth";
-import { env } from "@/env";
+import { validateSession } from '@/auth/auth';
+import { env } from '@/env';
 
 const googleAuthIsEnabled =
   env.GOOGLE_CLIENT_ID !== undefined && env.GOOGLE_CLIENT_SECRET !== undefined;
@@ -14,7 +14,9 @@ const googleAuthIsEnabled =
 export default async function Page() {
   const { user } = await validateSession();
 
-  if (user) redirect("/");
+  if (user) {
+    redirect('/home');
+  }
 
   return (
     <main className="container mx-auto flex flex-col">
