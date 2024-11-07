@@ -4,11 +4,12 @@ import { Icon } from "@/primitives/icon";
 import { Avatar, AvatarFallback, AvatarImage } from "./avator";
 
 import { Input } from "@/primitives/input";
+import { SidebarTrigger } from "@/primitives/sidebar";
 
 export function Navbar() {
   return (
     <div className="flex items-center justify-between p-2">
-      <Icon name="PanelLeft" />
+      <SidebarTrigger />
       <div className="flex items-center gap-2">
         <div className="relative">
           <Input placeholder="sections,teachers,students" className="pr-10" />

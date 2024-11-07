@@ -1,37 +1,99 @@
-import { Icon } from '@/primitives/icon';
+"use client";
+import {
+  Contact,
+  GalleryVerticalEnd,
+  House,
+  SquareMenu,
+  UserPen,
+  Users,
+} from "lucide-react";
 
-export function SideBar() {
-  return (
-    <div className="flex basis-48 flex-col gap-8 border-r border-gray-subtle-border p-4">
-      <div className="font-bold text-xl">Instructise</div>
-      <Menu />
-    </div>
-  );
-}
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/primitives/sidebar";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-function Menu() {
+// Menu items.
+const items = [
+  {
+    title: "Home",
+    url: "/home",
+    icon: House,
+  },
+  {
+    title: "Class",
+    url: "/class",
+    icon: UserPen,
+  },
+  {
+    title: "Student",
+    url: "/student",
+    icon: Contact,
+  },
+  {
+    title: "Teacher",
+    url: "/teacher",
+    icon: Users,
+  },
+  {
+    title: "Exam",
+    url: "/exam",
+    icon: SquareMenu,
+  },
+];
+
+export function AppSidebar() {
+  const pathname = usePathname();
   return (
-    <div className="flex flex-col gap-2 text-gray">
-      <div className="flex gap-2 hover:text-gray-foreground-muted hover:cursor-pointer">
-        <Icon name="House" size={20} />
-        <div className="font-medium">home</div>
-      </div>
-      <div className="flex gap-2">
-        <Icon name="UserPen" size={20} />
-        <div className="font-medium">class</div>
-      </div>
-      <div className="flex gap-2">
-        <Icon name="Contact" size={20} />
-        <div className="font-medium">students</div>
-      </div>
-      <div className="flex gap-2">
-        <Icon name="Users" size={20} />
-        <div className="font-medium">teachers</div>
-      </div>
-      <div className="flex gap-2">
-        <Icon name="SquareMenu" size={20} />
-        <div className="font-medium">exams</div>
-      </div>
-    </div>
+    <Sidebar className="basis-48 border-gray-subtle-border" variant="sidebar">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              size="lg"
+              asChild
+              className="border border-gray-subtle-border"
+            >
+              <a href="#">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-gray-app">
+                  <GalleryVerticalEnd className="size-4" />
+                </div>
+                <div className="flex flex-col gap-0.5 leading-none">
+                  <span className="font-semibold">Instructise</span>
+                  <span className="text-xs">student</span>
+                </div>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild isActive={item.url === pathname}>
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span className="font-medium">{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
   );
 }

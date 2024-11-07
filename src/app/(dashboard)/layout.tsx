@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
-import { SideBar } from "./sidebar";
+import { AppSidebar } from "./sidebar";
 import { Navbar } from "./navbar";
 import { validateSession } from "@/auth/auth";
 import { serverClient } from "@/lib/trpc/serverClient";
 import { redirect } from "next/navigation";
 import { Onboarding } from "./onboarding";
+import { SidebarProvider } from "@/primitives/sidebar";
 export default async function DashboardLayout({
   children,
 }: {
@@ -21,11 +22,13 @@ export default async function DashboardLayout({
   }
   return (
     <div className="flex min-h-screen">
-      <SideBar />
-      <div className="flex grow flex-col">
-        <Navbar />
-        {children}
-      </div>
+      <SidebarProvider>
+        <AppSidebar />
+        <div className="flex grow flex-col">
+          <Navbar />
+          {children}
+        </div>
+      </SidebarProvider>
     </div>
   );
 }
