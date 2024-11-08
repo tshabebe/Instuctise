@@ -1,7 +1,7 @@
 "use client";
 import {
   Contact,
-  GalleryVerticalEnd,
+  // GalleryVerticalEnd,
   House,
   SquareMenu,
   UserPen,
@@ -18,7 +18,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/primitives/sidebar";
+import Image from "next/image";
 import Link from "next/link";
+import Logo from "../logo.png";
 import { usePathname } from "next/navigation";
 
 // Menu items.
@@ -57,20 +59,22 @@ export function AppSidebar() {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              asChild
-              className="border border-gray-subtle-border"
-            >
-              <a href="#">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-gray-app">
-                  <GalleryVerticalEnd className="size-4" />
-                </div>
-                <div className="flex flex-col gap-0.5 leading-none">
+            <SidebarMenuButton size="lg" asChild className="">
+              <Link href="#">
+                {/* <div className="flex aspect-square size-8 items-cengter justify-center rounded-l bg-sidebar-primary text-gray-app"> */}
+                {/* <GalleryVerticalEnd className="size-4" /> */}
+                <Image
+                  src={Logo}
+                  width={32}
+                  height={32}
+                  alt="Instructise logo"
+                />
+                {/* </div> */}
+                {/* <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-semibold">Instructise</span>
                   <span className="text-xs">student</span>
-                </div>
-              </a>
+                </div> */}
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
