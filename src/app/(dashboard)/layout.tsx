@@ -24,7 +24,7 @@ export default async function DashboardLayout({
     <div className="flex min-h-screen">
       <SidebarProvider>
         <AppSidebar />
-        <div className="flex grow flex-col">
+        <div className="flex grow flex-col gap-8">
           <Navbar />
           {children}
         </div>
