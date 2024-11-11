@@ -51,7 +51,7 @@ function GroupContainer() {
 
 function CardClass() {
   return (
-    <div className="flex flex-col px-4 py-2 gap-2 border rounded-lg border-gray-subtle-border bg-gray-subtle">
+    <div className="group flex flex-col px-4 py-2 gap-2 border rounded-lg border-gray-subtle-border bg-gray-subtle hover:bg-gray-element">
       <div className="flex justify-between items-center">
         <div className="font-semibold">Computer Science</div>
         <Icon name="Ellipsis" className="text-gray-solid" />

@@ -3,6 +3,7 @@ import {
   Contact,
   // GalleryVerticalEnd,
   House,
+  Plus,
   SquareMenu,
   UserPen,
   Users,
@@ -22,6 +23,16 @@ import Image from "next/image";
 import Link from "next/link";
 import Logo from "../logo.png";
 import { usePathname } from "next/navigation";
+import { Icon } from "@/primitives/icon";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/primitives/dropdown-menu";
+import { Button } from "@/primitives/button";
 
 // Menu items.
 const items = [
@@ -59,23 +70,68 @@ export function AppSidebar() {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild className="">
-              <Link href="#">
-                {/* <div className="flex aspect-square size-8 items-cengter justify-center rounded-l bg-sidebar-primary text-gray-app"> */}
-                {/* <GalleryVerticalEnd className="size-4" /> */}
-                <Image
-                  src={Logo}
-                  width={32}
-                  height={32}
-                  alt="Instructise logo"
-                />
-                {/* </div> */}
-                {/* <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold">Instructise</span>
-                  <span className="text-xs">student</span>
-                </div> */}
-              </Link>
-            </SidebarMenuButton>
+            <DropdownMenu>
+              <SidebarMenuButton size="lg" asChild className="">
+                <Link href="/home">
+                  {/* <div className="flex aspect-square size-8 items-cengter justify-center rounded-l bg-sidebar-primary text-gray-app"> */}
+                  {/* <GalleryVerticalEnd className="size-4" /> */}
+                  <Image
+                    src={Logo}
+                    width={32}
+                    height={32}
+                    alt="Instructise logo"
+                  />
+                  {/* </div> */}
+                  <div className="flex flex-col gap-0.5 leading-none">
+                    <span className="font-semibold">Instructise</span>
+                    <span className="text-xs">student</span>
+                  </div>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className={"size-7 ml-auto"}
+                    >
+                      <Icon name="ChevronsUpDown" />
+                      <span className="sr-only">Switch User</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                </Link>
+              </SidebarMenuButton>
+              <DropdownMenuContent
+                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg border-gray-subtle-border"
+                align="start"
+                side="bottom"
+                sideOffset={4}
+              >
+                <DropdownMenuLabel className="text-xs text-gray-solid">
+                  Teams
+                </DropdownMenuLabel>
+                <DropdownMenuItem className="p-2">
+                  <div className="flex justify-between grow">
+                    <div className="font-medium">Teshome Abebe</div>
+                    <span className="font-medium text-gray-solid text-sm">
+                      student
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="p-2">
+                  <div className="flex justify-between grow">
+                    <div className="font-medium">Teshome Abebe</div>
+                    <span className="font-medium text-gray-solid text-sm">
+                      teacher
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="gap-2 p-2">
+                  <div className="flex size-6 items-center justify-center rounded-md border border-gray-subtle-border">
+                    <Plus className="size-4" />
+                  </div>
+                  <div className="font-medium text-gray-solid">Add team</div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
