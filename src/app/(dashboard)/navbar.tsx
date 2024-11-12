@@ -13,7 +13,10 @@ export function Navbar() {
       <div className="flex items-center gap-2">
         <div className="relative">
           <Input placeholder="sections,teachers,students" className="pr-10" />
-          <Button variant={"ghost"} className="absolute right-0 top-0">
+          <Button
+            variant={"ghost"}
+            className="absolute right-0 w-7 h-fit top-0"
+          >
             <Icon name="Search" />
           </Button>
         </div>

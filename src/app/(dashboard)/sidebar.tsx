@@ -3,6 +3,7 @@ import {
   Contact,
   // GalleryVerticalEnd,
   House,
+  NotebookPen,
   Plus,
   SquareMenu,
   UserPen,
@@ -14,6 +15,7 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -60,6 +62,45 @@ const items = [
     title: "Exam",
     url: "/exam",
     icon: SquareMenu,
+  },
+];
+
+const recents = [
+  {
+    title: "be prepared for final exam",
+    type: "blog",
+    id: "bolg-123",
+    icon: NotebookPen,
+  },
+  {
+    title: "Computer Sience",
+    type: "class",
+    id: "class-123",
+    icon: UserPen,
+  },
+  {
+    title: "Final Exam preparation",
+    type: "exam",
+    id: "exam-123",
+    icon: UserPen,
+  },
+  {
+    title: "be prepared for final exam",
+    type: "blog",
+    id: "bolg-123",
+    icon: NotebookPen,
+  },
+  {
+    title: "Computer Sience",
+    type: "class",
+    id: "class-123",
+    icon: UserPen,
+  },
+  {
+    title: "Final Exam preparation",
+    type: "exam",
+    id: "exam-123",
+    icon: UserPen,
   },
 ];
 
@@ -146,6 +187,23 @@ export function AppSidebar() {
                     <Link href={item.url}>
                       <item.icon />
                       <span className="font-medium">{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Recents</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {recents.map((recents) => (
+                <SidebarMenuItem key={recents.title}>
+                  <SidebarMenuButton asChild>
+                    <Link href={"#"}>
+                      <recents.icon />
+                      <span className="font-medium">{recents.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
