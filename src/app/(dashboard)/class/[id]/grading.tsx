@@ -43,7 +43,7 @@ export function Grading() {
         <div className="tracking-tight text-xl font-bold text-gray-solid">
           Grading
         </div>
-        <span className="text-pink-foreground-muted font-semibold">
+        <span className="text-orange-foreground-muted font-semibold">
           view all
         </span>
       </div>

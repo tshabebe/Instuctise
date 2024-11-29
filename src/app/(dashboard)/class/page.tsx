@@ -71,7 +71,7 @@ function CardClass({ id }: { id: string }) {
       <div className="flex gap-4">
         <div className="flex items-center gap-1">
           <Icon name="UserPen" />
-          <span className="text-pink-foreground-muted text-sm font-semibold">
+          <span className="text-orange-foreground-muted text-sm font-semibold">
             3
           </span>
           <span className="text-sm font-medium leading-none text-gray-solid">
@@ -80,7 +80,7 @@ function CardClass({ id }: { id: string }) {
         </div>
         <div className="flex items-center gap-2">
           <Icon name="GraduationCap" />
-          <span className="text-pink-foreground-muted text-sm font-semibold">
+          <span className="text-orange-foreground-muted text-sm font-semibold">
             3
           </span>
           <span className="text-sm font-medium leading-none text-gray-solid">
@@ -117,7 +117,7 @@ function CardGroup() {
       <div className="flex gap-4">
         <div className="flex items-center gap-1">
           <Icon name="UserPen" />
-          <span className="text-pink-foreground-muted text-sm font-semibold">
+          <span className="text-orange-foreground-muted text-sm font-semibold">
             3
           </span>
           <span className="text-sm font-medium leading-none text-gray-solid">
@@ -126,7 +126,7 @@ function CardGroup() {
         </div>
         <div className="flex items-center gap-1">
           <Icon name="Warehouse" />
-          <span className="text-pink-foreground-muted text-sm font-semibold">
+          <span className="text-orange-foreground-muted text-sm font-semibold">
             14
           </span>
           <span className="text-sm font-medium leading-none text-gray-solid">
@@ -135,7 +135,7 @@ function CardGroup() {
         </div>
         <div className="flex items-center gap-2">
           <Icon name="GraduationCap" />
-          <span className="text-pink-foreground-muted text-sm font-semibold">
+          <span className="text-orange-foreground-muted text-sm font-semibold">
             3
           </span>
           <span className="text-sm font-medium leading-none text-gray-solid">

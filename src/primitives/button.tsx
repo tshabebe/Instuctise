@@ -13,17 +13,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-gradient-to-br from-salmon to-pink text-white hover:opacity-90 dark:text-black",
+          "bg-gradient-to-br from-salmon to-orange text-white hover:opacity-90 dark:text-black",
         destructive: "bg-red text-white hover:bg-red-solid-hover",
         outline:
-          "border border-pink-subtle-border bg-gray-element text-foreground-muted hover:bg-gray-element-hover hover:text-foreground",
+          "border border-orange-subtle-border bg-gray-element text-foreground-muted hover:bg-gray-element-hover hover:text-foreground",
         ghost:
           "text-foreground-muted hover:bg-gray-element hover:text-foreground",
         // 'bg-indigo text-black',
-        link: "relative bg-gradient-to-br from-salmon to-pink bg-clip-text text-transparent before:absolute before:bottom-0 before:h-px before:w-[calc(100%-24px)] before:rounded-full before:bg-gradient-to-br before:from-salmon before:to-pink hover:opacity-90",
-        subtlePrimary: "bg-pink-subtle text-pink-foreground-muted",
+        link: "relative bg-gradient-to-br from-salmon to-orange bg-clip-text text-transparent before:absolute before:bottom-0 before:h-px before:w-[calc(100%-24px)] before:rounded-full before:bg-gradient-to-br before:from-salmon before:to-orange hover:opacity-90",
+        subtlePrimary: "bg-orange-subtle text-orange-foreground-muted",
         subtleOutline:
-          "border border-pink-subtle-border text-foreground-muted hover:bg-gray-element-hover hover:text-foreground",
+          "border border-orange-subtle-border text-foreground-muted hover:bg-gray-element-hover hover:text-foreground",
       },
       size: {
         default: "px-4 py-2",
