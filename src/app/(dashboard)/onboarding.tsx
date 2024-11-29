@@ -118,7 +118,9 @@ function CreateClassOnboarding() {
                       key={username}
                       variant={"ghost"}
                       size={"sm"}
-                      onClick={() => form.setValue("username", username)}
+                      onClick={() => {
+                        form.setValue("username", username);
+                      }}
                     >
                       <li>{username}</li>
                     </Button>

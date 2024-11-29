@@ -1,9 +1,9 @@
 "use client";
 import {
+  ChevronRight,
   Contact,
   // GalleryVerticalEnd,
   House,
-  NotebookPen,
   Plus,
   SquareMenu,
   UserPen,
@@ -20,6 +20,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarSeparator,
 } from "@/primitives/sidebar";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,6 +39,11 @@ import {
   DropdownMenuSeparator,
 } from "@/primitives/dropdown-menu";
 import { Button } from "@/primitives/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/primitives/collapsible";
 
 // Menu items.
 const items = [
@@ -67,40 +76,52 @@ const items = [
 
 const recents = [
   {
-    title: "be prepared for final exam",
-    type: "blog",
-    id: "bolg-123",
-    icon: NotebookPen,
-  },
-  {
-    title: "Computer Sience",
-    type: "class",
-    id: "class-123",
+    title: "class",
+    id: "bolg-1",
+    list: [
+      {
+        title: "Computer Science",
+        id: "computer-1",
+      },
+      {
+        title: "Business Managment",
+        id: "computer-2",
+      },
+      {
+        title: "Accounting 4th year",
+        id: "computer-3",
+      },
+    ],
     icon: UserPen,
   },
   {
-    title: "Final Exam preparation",
-    type: "exam",
-    id: "exam-123",
+    title: "Blogs",
+    list: [
+      {
+        title: "be prepared for final exam",
+        id: "blog-1",
+      },
+      {
+        title: "An assignment is set to be delvered on monday",
+        id: "blog-2",
+      },
+      {
+        title: "How does postgres work under the hood",
+        id: "blog-3",
+      },
+    ],
+    id: "class-2",
     icon: UserPen,
   },
   {
-    title: "be prepared for final exam",
-    type: "blog",
-    id: "bolg-123",
-    icon: NotebookPen,
-  },
-  {
-    title: "Computer Sience",
-    type: "class",
-    id: "class-123",
-    icon: UserPen,
-  },
-  {
-    title: "Final Exam preparation",
-    type: "exam",
-    id: "exam-123",
-    icon: UserPen,
+    title: "Exam",
+    id: "exam-3",
+    list: [
+      { title: "Maths final chapter 4", id: "Exam 1" },
+
+      { title: "Object Oriented Programming mid chapter 4", id: "Exam 1" },
+    ],
+    icon: SquareMenu,
   },
 ];
 
@@ -194,19 +215,36 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <SidebarSeparator />
         <SidebarGroup>
           <SidebarGroupLabel>Recents</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {recents.map((recents) => (
-                <SidebarMenuItem key={recents.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={"#"}>
-                      <recents.icon />
-                      <span className="font-medium">{recents.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <Collapsible key={recents.id} className="group/collapsible">
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton asChild>
+                        <Link href={"#"}>
+                          <recents.icon />
+                          <span className="font-medium">{recents.title}</span>
+                          <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                        </Link>
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {recents.list.map((list) => (
+                          <SidebarMenuSubItem key={list.id}>
+                            <SidebarMenuSubButton>
+                              {list.title}
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                </Collapsible>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>

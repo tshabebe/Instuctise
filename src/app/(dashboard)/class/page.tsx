@@ -1,9 +1,12 @@
+"use client";
+
 import { Button } from "@/primitives/button";
 import { Icon } from "@/primitives/icon";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Class() {
   return (
-    <div className="grow px-4 flex flex-col gap-8">
+    <div className="grow px-8 flex flex-col gap-8">
       <ClassContainer />
       <GroupContainer />
     </div>
@@ -22,9 +25,9 @@ function ClassContainer() {
         </Button> */}
       </div>
       <div className="flex flex-wrap gap-4">
-        <CardClass />
-        <CardClass />
-        <CardClass />
+        <CardClass id="class234" />
+        <CardClass id="class234" />
+        <CardClass id="class445" />
       </div>
     </div>
   );
@@ -49,9 +52,17 @@ function GroupContainer() {
   );
 }
 
-function CardClass() {
+function CardClass({ id }: { id: string }) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   return (
-    <div className="group flex flex-col px-4 py-2 gap-2 border rounded-lg border-gray-subtle-border bg-gray-subtle hover:bg-gray-element">
+    <div
+      onClick={() => {
+        router.push(`${pathname}/${id}`);
+      }}
+      className="group flex flex-col gap-2 rounded-lg border border-gray-subtle-border bg-gray-subtle px-4 py-2 hover:cursor-pointer hover:bg-gray-element"
+    >
       <div className="flex justify-between items-center">
         <div className="font-semibold">Computer Science</div>
         <Icon name="Ellipsis" className="text-gray-solid" />
@@ -80,10 +91,10 @@ function CardClass() {
 
       <div className="flex justify-between items-center gap-4">
         <div className="flex gap-2">
-          <Button variant={"outline"} size={"sm"}>
+          <Button variant={"ghost"} size={"sm"}>
             announce
           </Button>
-          <Button variant={"outline"} size={"sm"}>
+          <Button variant={"ghost"} size={"sm"}>
             grade
           </Button>
         </div>
@@ -135,10 +146,10 @@ function CardGroup() {
 
       <div className="flex justify-between items-center gap-4">
         <div className="flex gap-2">
-          <Button variant={"outline"} size={"sm"}>
+          <Button variant={"ghost"} size={"sm"}>
             announce
           </Button>
-          <Button variant={"outline"} size={"sm"}>
+          <Button variant={"ghost"} size={"sm"}>
             grade
           </Button>
         </div>

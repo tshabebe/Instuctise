@@ -8,7 +8,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-subtle-border focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-subtle-border focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -16,11 +16,14 @@ const buttonVariants = cva(
           "bg-gradient-to-br from-salmon to-pink text-white hover:opacity-90 dark:text-black",
         destructive: "bg-red text-white hover:bg-red-solid-hover",
         outline:
-          "border border-gray-subtle-border bg-gray-element text-foreground-muted hover:bg-gray-element-hover hover:text-foreground",
+          "border border-pink-subtle-border bg-gray-element text-foreground-muted hover:bg-gray-element-hover hover:text-foreground",
         ghost:
           "text-foreground-muted hover:bg-gray-element hover:text-foreground",
         // 'bg-indigo text-black',
         link: "relative bg-gradient-to-br from-salmon to-pink bg-clip-text text-transparent before:absolute before:bottom-0 before:h-px before:w-[calc(100%-24px)] before:rounded-full before:bg-gradient-to-br before:from-salmon before:to-pink hover:opacity-90",
+        subtlePrimary: "bg-pink-subtle text-pink-foreground-muted",
+        subtleOutline:
+          "border border-pink-subtle-border text-foreground-muted hover:bg-gray-element-hover hover:text-foreground",
       },
       size: {
         default: "px-4 py-2",

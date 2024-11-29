@@ -7,6 +7,7 @@ const generateColorScale = (scale: Scale) => ({
 
   "foreground-muted": `hsl(var(--${scale}-11))`,
   foreground: `hsl(var(--${scale}-12))`,
+  "foreground-hover": `hsl(var(--${scale}-12))`,
 
   app: `hsl(var(--${scale}-1))`,
 
