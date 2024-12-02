@@ -1,4 +1,6 @@
 // eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/no-confusing-void-expression */
 "use client";
 
