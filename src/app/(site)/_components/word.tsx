@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { motion, Variants } from 'framer-motion';
+import { motion, Variants } from "framer-motion";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface WordFadeInProps {
   words: string;
@@ -16,7 +16,7 @@ export default function WordFadeIn({
   delay = 0.15,
   variants = {
     hidden: { opacity: 0 },
-    visible: (i: any) => ({
+    visible: (i: number) => ({
       y: 0,
       opacity: 1,
       transition: { delay: i * delay },
@@ -24,7 +24,7 @@ export default function WordFadeIn({
   },
   className,
 }: WordFadeInProps) {
-  const _words = words.split(' ');
+  const _words = words.split(" ");
 
   return (
     <motion.h1
@@ -32,13 +32,13 @@ export default function WordFadeIn({
       initial="hidden"
       animate="visible"
       className={cn(
-        'dark:text-foreground-muted text-center text-4xl font-extrabold tracking-[-0.02em] text-black drop-shadow-sm md:text-7xl md:leading-[5rem]',
-        className,
+        "dark:text-foreground-muted text-center text-4xl font-extrabold tracking-[-0.02em] text-black drop-shadow-sm md:text-7xl md:leading-[5rem]",
+        className
       )}
     >
       {_words.map((word, i) => (
         <motion.span key={word} variants={variants} custom={i}>
-          {word}{' '}
+          {word}{" "}
         </motion.span>
       ))}
     </motion.h1>

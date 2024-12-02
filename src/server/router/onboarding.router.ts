@@ -44,26 +44,24 @@ export const onboardingRouter = router({
   }),
   getUsername: authedProcedure.query(async (opts) => {
     const suggestions = [];
+    const requiredCount = 2;
 
-    for (let i = 0; i < 2; i++) {
+    while (suggestions.length < requiredCount) {
       const username = generateUsername();
-      suggestions.push(username);
+
+      const exists = await opts.ctx.db
+        .select()
+        .from(section)
+        .where(eq(section.username, username))
+        .execute();
+
+      if (exists.length === 0) {
+        suggestions.push(username);
+      }
     }
 
-    // Check availability for all suggestions
-    const availableUsernames = await Promise.all(
-      suggestions.map(async (username) => {
-        const exists = await opts.ctx.db
-          .select()
-          .from(section)
-          .where(eq(section.username, username))
-          .execute();
-
-        return exists.length === 0 ? username : null;
-      }),
-    );
     return {
-      suggestions: availableUsernames.filter(Boolean),
+      suggestions,
     };
   }),
 });

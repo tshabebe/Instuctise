@@ -62,6 +62,13 @@ function CardClass({ id }: { id: string }) {
         router.push(`${pathname}/${id}`);
       }}
       className="group flex flex-col gap-2 rounded-lg border border-gray-subtle-border bg-gray-subtle px-4 py-2 hover:cursor-pointer hover:bg-gray-element"
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          router.push(`${pathname}/${id}`);
+        }
+      }}
     >
       <div className="flex justify-between items-center">
         <div className="font-semibold">Computer Science</div>
@@ -139,7 +146,7 @@ function CardGroup() {
             3
           </span>
           <span className="text-sm font-medium leading-none text-gray-solid">
-            studentsk
+            students
           </span>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { Button } from "@/primitives/button";
 import { Icon } from "@/primitives/icon";
 import { Grading } from "./grading";
 
-export default function IndvidualClass({ params }: { params: { id: string } }) {
+export default function IndvidualClass() {
   return (
     <main className="flex flex-col p-8 pt-4 gap-4">
       <div className="flex items-center justify-between">
