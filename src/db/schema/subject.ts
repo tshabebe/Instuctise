@@ -5,31 +5,20 @@ import { relations, sql } from "drizzle-orm";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { teacher } from "./teacher";
 
-export const subject = pgTable(
-  "subject",
-  {
-    id: varchar("id", { length: 30 })
-      .$defaultFn(() => generateId())
-      .primaryKey(), // prefix_ + nanoid (12)
-    name: varchar("name", { length: 256 }).notNull(),
-    sectionId: varchar("section_id")
-      .notNull()
-      .references(() => section.id)
-      .notNull(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at")
-      .default(sql`current_timestamp`)
-      .$onUpdate(() => new Date()),
-  }
-  // (table) => {
-  //   return {
-  //     uniqueSubject: unique("unique_teachers_name_with_subject").on(
-  //       table.sectionId, // no two tables with the similar subjects in the same section
-  //       table.id,
-  //     ),
-  //   };
-  // },
-);
+export const subject = pgTable("subject", {
+  id: varchar("id", { length: 30 })
+    .$defaultFn(() => generateId())
+    .primaryKey(), // prefix_ + nanoid (12)
+  name: varchar("name", { length: 256 }).notNull(),
+  sectionId: varchar("section_id")
+    .notNull()
+    .references(() => section.id)
+    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .default(sql`current_timestamp`)
+    .$onUpdate(() => new Date()),
+});
 
 export const subjectsRelations = relations(subject, ({ one, many }) => ({
   sectionId: one(section, {
@@ -53,19 +42,6 @@ export const teacherToSubject = pgTable("teacher_to_subject", {
     .notNull(),
 });
 
-export const teacherToSubjectRelation = relations(
-  teacherToSubject,
-  ({ one }) => ({
-    subjectsId: one(teacher, {
-      fields: [teacherToSubject.teacherId],
-      references: [teacher.id],
-    }),
-    teacherId: one(subject, {
-      fields: [teacherToSubject.subjectId],
-      references: [subject.id],
-    }),
-  })
-);
 export const InsertTeacherToSubjectSchema = createInsertSchema(
   teacherToSubject
 ).omit({ id: true });

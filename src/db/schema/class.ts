@@ -36,21 +36,6 @@ export const department = pgTable("department", {
     .$onUpdate(() => new Date()),
 });
 
-// export const departmentRelation = relations(department, ({ many }) => ({
-//   section: many(section),
-//   user: many(userTable),
-// }));
-
-// export const sectionRelation = relations(section, ({ one, many }) => ({
-//   department: one(department, {
-//     fields: [section.departmentId],
-//     references: [department.id],
-//   }),
-//   students: many(student),
-//   teachers: many(teacher),
-//   subjects: many(subjects),
-// }));
-
 export const ZInsertDepartmentSchema = createInsertSchema(department).omit({
   id: true,
 });
