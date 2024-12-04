@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 import { section } from "./class";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
@@ -19,6 +19,13 @@ export const teacher = pgTable("teacher", {
     .default(sql`current_timestamp`)
     .$onUpdate(() => new Date()),
 });
+
+export const teacherRelations = relations(teacher, ({ one }) => ({
+  sectionId: one(section, {
+    fields: [teacher.sectionId],
+    references: [section.id],
+  }),
+}));
 
 export const InsertTeacherSchema = createInsertSchema(teacher).omit({
   id: true,

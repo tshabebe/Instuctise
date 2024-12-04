@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
 import { oauthAccountTable, userTable } from "@/db/schema";
 import { generateId } from "@/lib/id";
 import { env } from "@/env";
-// import { getBaseUrl } from '@/lib/utils';
+import { getBaseUrl } from "@/lib/utils";
 
 const google =
   env.GOOGLE_CLIENT_ID !== undefined &&
@@ -15,7 +15,7 @@ const google =
   new Google(
     env.GOOGLE_CLIENT_ID,
     env.GOOGLE_CLIENT_SECRET,
-    `https://instuctise-l3jsew02n-teshomes-projects-909d1d70.vercel.app/login/google/callback`
+    `${getBaseUrl()}/login/google/callback`
   );
 
 export async function createGoogleAuthorizationURL(): Promise<Response> {

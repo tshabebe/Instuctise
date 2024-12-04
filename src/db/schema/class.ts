@@ -1,8 +1,10 @@
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { generateId } from "@/lib/id";
 import { userTable } from "./auth";
+import { teacher } from "./teacher";
+import { student } from "./student";
 
 export const section = pgTable("section", {
   id: varchar("id", { length: 30 })
@@ -18,6 +20,11 @@ export const section = pgTable("section", {
     .default(sql`current_timestamp`)
     .$onUpdate(() => new Date()),
 });
+
+export const sectionRelations = relations(section, ({ many }) => ({
+  teachers: many(teacher),
+  students: many(student),
+}));
 
 export const department = pgTable("department", {
   id: varchar("id", { length: 30 })
