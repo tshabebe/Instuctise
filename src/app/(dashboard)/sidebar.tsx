@@ -138,7 +138,7 @@ export function AppSidebar() {
                   {/* <div className="flex aspect-square size-8 items-cengter justify-center rounded-l bg-sidebar-primary text-gray-app"> */}
                   {/* <GalleryVerticalEnd className="size-4" /> */}
                   <Image
-                    src={Logo}
+                    src={Logo as string}
                     width={32}
                     height={32}
                     alt="Instructise logo"
