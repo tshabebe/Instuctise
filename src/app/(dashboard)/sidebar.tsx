@@ -25,7 +25,7 @@ import {
   SidebarMenuSubItem,
   SidebarSeparator,
 } from "@/primitives/sidebar";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import Logo from "../logo.png";
 import { usePathname } from "next/navigation";
@@ -138,7 +138,7 @@ export function AppSidebar() {
                   {/* <div className="flex aspect-square size-8 items-cengter justify-center rounded-l bg-sidebar-primary text-gray-app"> */}
                   {/* <GalleryVerticalEnd className="size-4" /> */}
                   <Image
-                    src={Logo as StaticImageData}
+                    src={Logo}
                     width={32}
                     height={32}
                     alt="Instructise logo"
