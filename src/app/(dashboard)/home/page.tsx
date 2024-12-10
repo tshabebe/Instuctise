@@ -16,7 +16,7 @@ export default function Home() {
 
 import { HTMLAttributes } from 'react';
 
-export function ToggleTheme(props: HTMLAttributes<HTMLButtonElement>) {
+function ToggleTheme(props: HTMLAttributes<HTMLButtonElement>) {
   const { theme, setTheme } = useTheme();
   return (
     <>
