@@ -1,10 +1,10 @@
 import { appRouter } from "@/server/app";
 import { createCallerFactory, createTRPCContext } from "@/server/trpc";
-import { headers } from "next/headers";
+import { headers, type UnsafeUnwrappedHeaders } from "next/headers";
 import { cache } from "react";
 
 const createContext = cache(() => {
-  const heads = new Headers(headers());
+  const heads = new Headers((headers() as unknown as UnsafeUnwrappedHeaders));
   heads.set("x-trpc-source", "rsc");
 
   return createTRPCContext({

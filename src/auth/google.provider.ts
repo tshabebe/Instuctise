@@ -31,7 +31,7 @@ export async function createGoogleAuthorizationURL(): Promise<Response> {
     scopes: ["profile", "email"],
   });
 
-  cookies().set("google_oauth_state", state, {
+  (await cookies()).set("google_oauth_state", state, {
     path: "/",
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
@@ -65,7 +65,7 @@ export async function validateGoogleCallback(
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
-  const storedState = cookies().get("google_oauth_state")?.value ?? null;
+  const storedState = (await cookies()).get("google_oauth_state")?.value ?? null;
   if (!code || !state || !storedState || state !== storedState) {
     return new Response(null, {
       status: 400,
@@ -103,7 +103,7 @@ export async function validateGoogleCallback(
     if (existingUser) {
       const session = await lucia.createSession(existingUser.userId, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
-      cookies().set(
+      (await cookies()).set(
         sessionCookie.name,
         sessionCookie.value,
         sessionCookie.attributes
@@ -131,7 +131,7 @@ export async function validateGoogleCallback(
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
 
-    cookies().set(
+    (await cookies()).set(
       sessionCookie.name,
       sessionCookie.value,
       sessionCookie.attributes
