@@ -29,7 +29,7 @@ export default function LandingPage() {
                 setPending(true);
               }}
             >
-              {pending ? <BounceLoader /> : <>Get started</>}
+              {pending ? <BounceLoader /> : <>Hoo started</>}
             </Button>
           </Link>
         </div>
