@@ -26,7 +26,7 @@ export const sectionRelations = relations(section, ({ many }) => ({
 export const group = pgTable('group', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 256 }).notNull(),
-  sectionId: varchar('group_id', { length: 30 })
+  sectionId: uuid('group_id')
     .references(() => section.id)
     .notNull(),
   userId: varchar('user_id')

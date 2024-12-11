@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS "user" (
 CREATE TABLE IF NOT EXISTS "group" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(256) NOT NULL,
-	"group_id" varchar(30) NOT NULL,
+	"group_id" uuid NOT NULL,
 	"user_id" varchar NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT current_timestamp
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS "student" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"student_name" varchar(256) NOT NULL,
 	"user_id" varchar,
-	"section_id" varchar NOT NULL,
+	"section_id" uuid NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT current_timestamp
 );
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS "student" (
 CREATE TABLE IF NOT EXISTS "teacher" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"teacher_name" varchar(256) NOT NULL,
-	"section_id" varchar NOT NULL,
+	"section_id" uuid NOT NULL,
 	"user_id" varchar,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT current_timestamp

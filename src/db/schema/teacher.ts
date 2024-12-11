@@ -7,7 +7,7 @@ import { userTable } from './auth';
 export const teacher = pgTable('teacher', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('teacher_name', { length: 256 }).notNull(),
-  sectionId: varchar('section_id')
+  sectionId: uuid('section_id')
     .references(() => section.id)
     .notNull(),
   userId: varchar('user_id').references(() => userTable.id),

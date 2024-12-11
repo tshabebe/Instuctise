@@ -8,8 +8,7 @@ export const student = pgTable('student', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('student_name', { length: 256 }).notNull(),
   userId: varchar('user_id').references(() => userTable.id),
-  sectionId: varchar('section_id')
-    .notNull()
+  sectionId: uuid('section_id')
     .references(() => section.id)
     .notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),

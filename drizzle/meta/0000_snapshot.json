@@ -1,5 +1,5 @@
 {
-  "id": "33ae3a5a-d0e6-4839-a0fa-5d82293cd7ef",
+  "id": "6b4575e3-4a65-4bf0-b869-ebe0f16f3b0b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -175,7 +175,7 @@
         },
         "group_id": {
           "name": "group_id",
-          "type": "varchar(30)",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -320,7 +320,7 @@
         },
         "section_id": {
           "name": "section_id",
-          "type": "varchar",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -390,7 +390,7 @@
         },
         "section_id": {
           "name": "section_id",
-          "type": "varchar",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
