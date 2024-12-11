@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   ChevronRight,
   Contact,
@@ -8,7 +8,7 @@ import {
   SquareMenu,
   UserPen,
   Users,
-} from "lucide-react";
+} from 'lucide-react';
 
 import {
   Sidebar,
@@ -24,12 +24,12 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarSeparator,
-} from "@/primitives/sidebar";
-import Image from "next/image";
-import Link from "next/link";
-import Logo from "../Icon.png";
-import { usePathname } from "next/navigation";
-import { Icon } from "@/primitives/icon";
+} from '@/primitives/sidebar';
+import Image from 'next/image';
+import Link from 'next/link';
+import Logo from '../Icon.png';
+import { usePathname } from 'next/navigation';
+import { Icon } from '@/primitives/icon';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -37,89 +37,89 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/primitives/dropdown-menu";
-import { Button } from "@/primitives/button";
+} from '@/primitives/dropdown-menu';
+import { Button } from '@/primitives/button';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/primitives/collapsible";
+} from '@/primitives/collapsible';
 
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "/home",
+    title: 'Home',
+    url: '/home',
     icon: House,
   },
   {
-    title: "Class",
-    url: "/class",
+    title: 'Class',
+    url: '/class',
     icon: UserPen,
   },
   {
-    title: "Student",
-    url: "/student",
+    title: 'Student',
+    url: '/student',
     icon: Contact,
   },
   {
-    title: "Teacher",
-    url: "/teacher",
+    title: 'Teacher',
+    url: '/teacher',
     icon: Users,
   },
   {
-    title: "Exam",
-    url: "/exam",
+    title: 'Exam',
+    url: '/exam',
     icon: SquareMenu,
   },
 ];
 
 const recents = [
   {
-    title: "class",
-    id: "bolg-1",
+    title: 'class',
+    id: 'bolg-1',
     list: [
       {
-        title: "Computer Science",
-        id: "computer-1",
+        title: 'Computer Science',
+        id: 'computer-1',
       },
       {
-        title: "Business Managment",
-        id: "computer-2",
+        title: 'Business Managment',
+        id: 'computer-2',
       },
       {
-        title: "Accounting 4th year",
-        id: "computer-3",
+        title: 'Accounting 4th year',
+        id: 'computer-3',
       },
     ],
     icon: UserPen,
   },
   {
-    title: "Blogs",
+    title: 'Blogs',
     list: [
       {
-        title: "be prepared for final exam",
-        id: "blog-1",
+        title: 'be prepared for final exam',
+        id: 'blog-1',
       },
       {
-        title: "An assignment is set to be delvered on monday",
-        id: "blog-2",
+        title: 'An assignment is set to be delvered on monday',
+        id: 'blog-2',
       },
       {
-        title: "How does postgres work under the hood",
-        id: "blog-3",
+        title: 'How does postgres work under the hood',
+        id: 'blog-3',
       },
     ],
-    id: "class-2",
+    id: 'class-2',
     icon: UserPen,
   },
   {
-    title: "Exam",
-    id: "exam-3",
+    title: 'Exam',
+    id: 'exam-3',
     list: [
-      { title: "Maths final chapter 4", id: "Exam 1" },
+      { title: 'Maths final chapter 4', id: 'Exam 1' },
 
-      { title: "Object Oriented Programming mid chapter 4", id: "Exam 1" },
+      { title: 'Object Oriented Programming mid chapter 4', id: 'Exam 1' },
     ],
     icon: SquareMenu,
   },
@@ -152,7 +152,7 @@ export function AppSidebar() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className={"size-7 ml-auto"}
+                      className={'size-7 ml-auto'}
                     >
                       <Icon name="ChevronsUpDown" />
                       <span className="sr-only">Switch User</span>
@@ -225,7 +225,7 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton asChild>
-                        <Link href={"#"}>
+                        <Link href={'#'}>
                           <recents.icon />
                           <span className="font-medium">{recents.title}</span>
                           <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />

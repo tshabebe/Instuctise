@@ -1,13 +1,13 @@
-import { cookies } from "next/headers";
-import { generateState, Google, OAuth2RequestError } from "arctic";
-import { lucia } from "@/auth/lucia";
-import { z } from "zod";
-import { db } from "@/db";
-import { eq } from "drizzle-orm";
-import { oauthAccountTable, userTable } from "@/db/schema";
-import { generateId } from "@/lib/id";
-import { env } from "@/env";
-import { getBaseUrl } from "@/lib/utils";
+import { cookies } from 'next/headers';
+import { generateState, Google, OAuth2RequestError } from 'arctic';
+import { lucia } from '@/auth/lucia';
+import { z } from 'zod';
+import { db } from '@/db';
+import { eq } from 'drizzle-orm';
+import { oauthAccountTable, userTable } from '@/db/schema';
+import { generateId } from '@/lib/id';
+import { env } from '@/env';
+import { getBaseUrl } from '@/lib/utils';
 
 const google =
   env.GOOGLE_CLIENT_ID !== undefined &&
@@ -15,28 +15,28 @@ const google =
   new Google(
     env.GOOGLE_CLIENT_ID,
     env.GOOGLE_CLIENT_SECRET,
-    `${getBaseUrl()}/login/google/callback`
+    `${getBaseUrl()}/login/google/callback`,
   );
 
 export async function createGoogleAuthorizationURL(): Promise<Response> {
   if (!google) {
     return new Response(null, {
       status: 404,
-      statusText: "Not Found",
+      statusText: 'Not Found',
     });
   }
 
   const state = generateState();
   const url = await google.createAuthorizationURL(state, env.GOOGLE_AUTH, {
-    scopes: ["profile", "email"],
+    scopes: ['profile', 'email'],
   });
 
-  (await cookies()).set("google_oauth_state", state, {
-    path: "/",
-    secure: process.env.NODE_ENV === "production",
+  (await cookies()).set('google_oauth_state', state, {
+    path: '/',
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 60 * 10,
-    sameSite: "lax",
+    sameSite: 'lax',
   });
 
   return Response.redirect(url);
@@ -54,18 +54,19 @@ const googleUser = z.object({
  * @returns The response.
  */
 export async function validateGoogleCallback(
-  request: Request
+  request: Request,
 ): Promise<Response> {
   if (!google) {
     return new Response(null, {
       status: 404,
-      statusText: "Not Found",
+      statusText: 'Not Found',
     });
   }
   const url = new URL(request.url);
-  const code = url.searchParams.get("code");
-  const state = url.searchParams.get("state");
-  const storedState = (await cookies()).get("google_oauth_state")?.value ?? null;
+  const code = url.searchParams.get('code');
+  const state = url.searchParams.get('state');
+  const storedState =
+    (await cookies()).get('google_oauth_state')?.value ?? null;
   if (!code || !state || !storedState || state !== storedState) {
     return new Response(null, {
       status: 400,
@@ -75,16 +76,16 @@ export async function validateGoogleCallback(
   try {
     const tokens = await google.validateAuthorizationCode(
       code,
-      env.GOOGLE_AUTH
+      env.GOOGLE_AUTH,
     );
 
     const googleUserResponse = await fetch(
-      "https://openidconnect.googleapis.com/v1/userinfo",
+      'https://openidconnect.googleapis.com/v1/userinfo',
       {
         headers: {
           Authorization: `Bearer ${tokens.accessToken}`,
         },
-      }
+      },
     );
     const parsedRes = googleUser.safeParse(await googleUserResponse.json());
 
@@ -106,12 +107,12 @@ export async function validateGoogleCallback(
       (await cookies()).set(
         sessionCookie.name,
         sessionCookie.value,
-        sessionCookie.attributes
+        sessionCookie.attributes,
       );
       return new Response(null, {
         status: 302,
         headers: {
-          Location: "/",
+          Location: '/',
         },
       });
     }
@@ -124,7 +125,7 @@ export async function validateGoogleCallback(
       avatorUrl: picture,
     });
     await db.insert(oauthAccountTable).values({
-      providerId: "google",
+      providerId: 'google',
       providerUserId: sub,
       userId,
     });
@@ -134,13 +135,13 @@ export async function validateGoogleCallback(
     (await cookies()).set(
       sessionCookie.name,
       sessionCookie.value,
-      sessionCookie.attributes
+      sessionCookie.attributes,
     );
 
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/",
+        Location: '/',
       },
     });
   } catch (e) {

@@ -1,19 +1,19 @@
-import { relations, sql } from "drizzle-orm";
-import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { userTable } from "./auth";
-import { teacher } from "./teacher";
-import { student } from "./student";
+import { relations, sql } from 'drizzle-orm';
+import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { userTable } from './auth';
+import { teacher } from './teacher';
+import { student } from './student';
 
-export const section = pgTable("section", {
+export const section = pgTable('section', {
   id: uuid('id').primaryKey().defaultRandom(),
-  name: varchar("name", { length: 256 }).notNull(),
-  userId: varchar("user_id")
+  name: varchar('name', { length: 256 }).notNull(),
+  userId: varchar('user_id')
     .references(() => userTable.id)
     .notNull(),
-  username: varchar("username", { length: 256 }).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
+  username: varchar('username', { length: 256 }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
     .default(sql`current_timestamp`)
     .$onUpdate(() => new Date()),
 });
@@ -23,17 +23,17 @@ export const sectionRelations = relations(section, ({ many }) => ({
   students: many(student),
 }));
 
-export const group = pgTable("group", {
+export const group = pgTable('group', {
   id: uuid('id').primaryKey().defaultRandom(),
-  name: varchar("name", { length: 256 }).notNull(),
-  sectionId: varchar("group_id", { length: 30 })
+  name: varchar('name', { length: 256 }).notNull(),
+  sectionId: varchar('group_id', { length: 30 })
     .references(() => section.id)
     .notNull(),
-  userId: varchar("user_id")
+  userId: varchar('user_id')
     .references(() => userTable.id)
     .notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
     .default(sql`current_timestamp`)
     .$onUpdate(() => new Date()),
 });

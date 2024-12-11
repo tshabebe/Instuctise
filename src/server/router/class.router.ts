@@ -1,5 +1,5 @@
-import { authedProcedure, router } from "../trpc";
-import { desc } from "drizzle-orm";
+import { authedProcedure, router } from '../trpc';
+import { desc } from 'drizzle-orm';
 
 export const classRouter = router({
   getAllClass: authedProcedure.query((opts) => {

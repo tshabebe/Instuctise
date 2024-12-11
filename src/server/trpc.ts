@@ -1,7 +1,7 @@
-import { TRPCError, initTRPC } from "@trpc/server";
-import { db } from "@/db";
-import { validateSession } from "@/auth/auth";
-import superjson from "superjson";
+import { TRPCError, initTRPC } from '@trpc/server';
+import { db } from '@/db';
+import { validateSession } from '@/auth/auth';
+import superjson from 'superjson';
 
 export const createTRPCContext = (opts: { headers: Headers }) => {
   return {
@@ -24,11 +24,12 @@ export const publicProcedure = t.procedure;
 export const authedProcedure = t.procedure.use(async ({ ctx, next }) => {
   const { user } = await validateSession();
 
-  if (!user)
+  if (!user) {
     throw new TRPCError({
-      code: "UNAUTHORIZED",
-      message: "You must be logged in to perform this action",
+      code: 'UNAUTHORIZED',
+      message: 'You must be logged in to perform this action',
     });
+  }
 
   return next({ ctx: { ...ctx, user: user } });
 });

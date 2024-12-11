@@ -1,9 +1,9 @@
-import { section } from "@/db/schema";
-import { authedProcedure, router } from "../trpc";
-import { eq } from "drizzle-orm";
-import { ZCreateClass } from "./onboarding.schema";
-import { generateUsername } from "unique-username-generator";
-import { TRPCError } from "@trpc/server";
+import { section } from '@/db/schema';
+import { authedProcedure, router } from '../trpc';
+import { eq } from 'drizzle-orm';
+import { ZCreateClass } from './onboarding.schema';
+import { generateUsername } from 'unique-username-generator';
+import { TRPCError } from '@trpc/server';
 
 export const onboardingRouter = router({
   getSection: authedProcedure.query(async (opts) => {
@@ -22,7 +22,10 @@ export const onboardingRouter = router({
           .from(section)
           .where(eq(section.username, opts.input.username))
           .execute();
-        if (exists) throw new Error("username already taken");
+
+        if (exists) {
+          throw new Error('username already taken');
+        }
         const [firstClass] = await tx
           .insert(section)
           .values({
@@ -36,8 +39,8 @@ export const onboardingRouter = router({
     } catch (error) {
       console.log(error);
       throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: "Could not create class",
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Could not create class',
         cause: error,
       });
     }

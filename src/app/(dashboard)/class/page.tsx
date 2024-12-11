@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Button } from "@/primitives/button";
-import { usePathname, useRouter } from "next/navigation";
+import { Button } from '@/primitives/button';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Class() {
   const router = useRouter();
@@ -13,9 +13,9 @@ export default function Class() {
         onClick={() => {
           router.push(`${pathname}/class234`);
         }}
-        variant={"link"}
+        variant={'link'}
       >
-        this is{" "}
+        this is{' '}
       </Button>
     </div>
   );
