@@ -1,15 +1,12 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
+import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { generateId } from "@/lib/id";
 import { userTable } from "./auth";
 import { teacher } from "./teacher";
 import { student } from "./student";
 
 export const section = pgTable("section", {
-  id: varchar("id", { length: 30 })
-    .$defaultFn(() => generateId())
-    .primaryKey(), // prefix_ + nanoid (12)
+  id: uuid('id').primaryKey().defaultRandom(),
   name: varchar("name", { length: 256 }).notNull(),
   userId: varchar("user_id")
     .references(() => userTable.id)
@@ -26,12 +23,10 @@ export const sectionRelations = relations(section, ({ many }) => ({
   students: many(student),
 }));
 
-export const department = pgTable("department", {
-  id: varchar("id", { length: 30 })
-    .$defaultFn(() => generateId())
-    .primaryKey(), // prefix_ + nanoid (12)
+export const group = pgTable("group", {
+  id: uuid('id').primaryKey().defaultRandom(),
   name: varchar("name", { length: 256 }).notNull(),
-  sectionId: varchar("department_id", { length: 30 })
+  sectionId: varchar("group_id", { length: 30 })
     .references(() => section.id)
     .notNull(),
   userId: varchar("user_id")
@@ -43,7 +38,7 @@ export const department = pgTable("department", {
     .$onUpdate(() => new Date()),
 });
 
-export const ZInsertDepartmentSchema = createInsertSchema(department).omit({
+export const ZInsertGroupSchema = createInsertSchema(group).omit({
   id: true,
 });
 export const ZInsertSectionSchema = createInsertSchema(section).omit({

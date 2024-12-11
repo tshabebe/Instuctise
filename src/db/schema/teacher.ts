@@ -1,14 +1,11 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
+import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { section } from "./class";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { generateId } from "@/lib/id";
 import { userTable } from "./auth";
 
 export const teacher = pgTable("teacher", {
-  id: varchar("id", { length: 30 })
-    .$defaultFn(() => generateId())
-    .primaryKey(), // prefix_ + nanoid (12)
+  id: uuid('id').primaryKey().defaultRandom(),
   name: varchar("teacher_name", { length: 256 }).notNull(),
   sectionId: varchar("section_id")
     .references(() => section.id)

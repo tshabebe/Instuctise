@@ -2,7 +2,6 @@
 import { Button } from '@/primitives/button';
 import Link from 'next/link';
 import { useState } from 'react';
-import BounceLoader from './_components/loader';
 
 export default function LandingPage() {
   const [pending, setPending] = useState<boolean>(false);
@@ -29,7 +28,7 @@ export default function LandingPage() {
                 setPending(true);
               }}
             >
-              {pending ? <BounceLoader /> : <>Hoo started</>}
+              {pending ? <div>loading</div> : <>Hoo started</>}
             </Button>
           </Link>
         </div>

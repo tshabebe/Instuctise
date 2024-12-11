@@ -11,6 +11,8 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "dev": "next dev --turbopack",
+    "format:check": "prettier \"**/*\" --ignore-unknown --list-different",
+    "format:write": "prettier \"**/*\" --ignore-unknown --list-different --write",
     "lint": "eslint .",
     "start": "next start",
     "typecheck": "tsc"
@@ -46,6 +48,7 @@
     "drizzle-zod": "^0.5.1",
     "framer-motion": "^11.13.5",
     "geist": "^1.3.1",
+    "jiti": "^2.4.1",
     "lucia": "^3.2.2",
     "lucide-react": "^0.439.0",
     "next": "15.0.4",
