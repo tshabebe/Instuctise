@@ -1,5 +1,4 @@
 import type { JSX, SVGProps } from 'react';
-const test = 5;
 const SvgComponent = (
   props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
 ) => (
