@@ -1,3 +1,4 @@
+import type { InferSelectModel } from 'drizzle-orm';
 import { pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 
@@ -39,3 +40,6 @@ export const sessionTable = pgTable('session', {
 export const ZInsertUserTable = createInsertSchema(userTable).omit({
   id: true,
 });
+
+export type User = InferSelectModel<typeof userTable>;
+export type Session = InferSelectModel<typeof sessionTable>;

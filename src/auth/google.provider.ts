@@ -1,6 +1,5 @@
 import { cookies } from 'next/headers';
 import { generateState, Google, OAuth2RequestError } from 'arctic';
-import { lucia } from '@/auth/lucia';
 import { z } from 'zod';
 import { db } from '@/db';
 import { eq } from 'drizzle-orm';
@@ -8,6 +7,11 @@ import { oauthAccountTable, userTable } from '@/db/schema';
 import { generateId } from '@/lib/id';
 import { env } from '@/env';
 import { getBaseUrl } from '@/lib/utils';
+import {
+  createSession,
+  generateSessionToken,
+  setSessionTokenCookie,
+} from './lucia';
 
 const google =
   env.GOOGLE_CLIENT_ID !== undefined &&
@@ -102,13 +106,9 @@ export async function validateGoogleCallback(
       .from(oauthAccountTable)
       .where(eq(oauthAccountTable.providerUserId, sub));
     if (existingUser) {
-      const session = await lucia.createSession(existingUser.userId, {});
-      const sessionCookie = lucia.createSessionCookie(session.id);
-      (await cookies()).set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes,
-      );
+      const sessionToken = generateSessionToken();
+      const session = await createSession(sessionToken, existingUser.userId);
+      await setSessionTokenCookie(sessionToken, session.expiresAt);
       return new Response(null, {
         status: 302,
         headers: {
@@ -129,14 +129,11 @@ export async function validateGoogleCallback(
       providerUserId: sub,
       userId,
     });
-    const session = await lucia.createSession(userId, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-
-    (await cookies()).set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes,
-    );
+    // const session = await lucia.createSession(userId, {});
+    // const sessionCookie = lucia.createSessionCookie(session.id);
+    const sessionToken = generateSessionToken();
+    const session = await createSession(sessionToken, userId);
+    await setSessionTokenCookie(sessionToken, session.expiresAt);
 
     return new Response(null, {
       status: 302,

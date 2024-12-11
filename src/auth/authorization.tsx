@@ -1,8 +1,8 @@
 // import { Comment, User } from "@/types/api";
 
+import type { User } from '@/db/schema';
 import { ZInsertUserTable } from '@/db/schema';
 import type { z } from 'zod';
-import type { User } from 'lucia';
 import type { ReactNode } from 'react';
 import { useCallback } from 'react';
 

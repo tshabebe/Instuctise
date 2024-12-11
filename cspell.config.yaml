@@ -19,3 +19,5 @@ words:
   - tanstack
   - trpc
   - typecheck
+  - turbopack
+  - lockb
