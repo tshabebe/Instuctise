@@ -13,5 +13,5 @@ export function getBaseUrl() {
   if (process.env['VERCEL_URL']) {
     return `https://${process.env['VERCEL_URL']}`;
   }
-  return `http://localhost:${String(process.env['PORT'] ?? 3000)}`;
+  return `https://solid-train-jjr44jgv9w4wfqwqx-3000.app.github.dev`;
 }

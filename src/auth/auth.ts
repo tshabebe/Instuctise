@@ -1,42 +1,14 @@
-import { cookies } from 'next/headers';
 import { cache } from 'react';
-import { lucia } from './lucia';
-import type { Session, User } from 'lucia';
+import { validateSessionToken, type SessionValidationResult } from './lucia';
+import { cookies } from 'next/headers';
 
 export const validateSession = cache(
-  async (): Promise<
-    { user: User; session: Session } | { user: null; session: null }
-  > => {
-    const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
-    if (!sessionId) {
-      return {
-        user: null,
-        session: null,
-      };
+  async (): Promise<SessionValidationResult> => {
+    const token = (await cookies()).get('session')?.value ?? null;
+    if (!token) {
+      return { session: null, user: null };
     }
-
-    const result = await lucia.validateSession(sessionId);
-    // next.js throws when you attempt to set cookie when rendering page
-    try {
-      if (result.session?.fresh) {
-        const sessionCookie = lucia.createSessionCookie(result.session.id);
-        cookies().set(
-          sessionCookie.name,
-          sessionCookie.value,
-          sessionCookie.attributes,
-        );
-      }
-      if (!result.session) {
-        const sessionCookie = lucia.createBlankSessionCookie();
-        cookies().set(
-          sessionCookie.name,
-          sessionCookie.value,
-          sessionCookie.attributes,
-        );
-      }
-    } catch {
-      /* empty */
-    }
+    const result = validateSessionToken(token);
     return result;
   },
 );

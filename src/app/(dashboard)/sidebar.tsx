@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   ChevronRight,
   Contact,
@@ -8,7 +8,7 @@ import {
   SquareMenu,
   UserPen,
   Users,
-} from "lucide-react";
+} from 'lucide-react';
 
 import {
   Sidebar,
@@ -24,12 +24,12 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarSeparator,
-} from "@/primitives/sidebar";
-import Image from "next/image";
-import Link from "next/link";
-import Logo from "../logo.png";
-import { usePathname } from "next/navigation";
-import { Icon } from "@/primitives/icon";
+} from '@/primitives/sidebar';
+import Image from 'next/image';
+import Link from 'next/link';
+import Logo from '../Icon.png';
+import { usePathname } from 'next/navigation';
+import { Icon } from '@/primitives/icon';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -37,89 +37,89 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/primitives/dropdown-menu";
-import { Button } from "@/primitives/button";
+} from '@/primitives/dropdown-menu';
+import { Button } from '@/primitives/button';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/primitives/collapsible";
+} from '@/primitives/collapsible';
 
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "/home",
+    title: 'Home',
+    url: '/home',
     icon: House,
   },
   {
-    title: "Class",
-    url: "/class",
+    title: 'Class',
+    url: '/class',
     icon: UserPen,
   },
   {
-    title: "Student",
-    url: "/student",
+    title: 'Student',
+    url: '/student',
     icon: Contact,
   },
   {
-    title: "Teacher",
-    url: "/teacher",
+    title: 'Teacher',
+    url: '/teacher',
     icon: Users,
   },
   {
-    title: "Exam",
-    url: "/exam",
+    title: 'Exam',
+    url: '/exam',
     icon: SquareMenu,
   },
 ];
 
-const recents = [
+const recent = [
   {
-    title: "class",
-    id: "bolg-1",
+    title: 'class',
+    id: 'blog-1',
     list: [
       {
-        title: "Computer Science",
-        id: "computer-1",
+        title: 'Computer Science',
+        id: 'computer-1',
       },
       {
-        title: "Business Managment",
-        id: "computer-2",
+        title: 'Business Management',
+        id: 'computer-2',
       },
       {
-        title: "Accounting 4th year",
-        id: "computer-3",
+        title: 'Accounting 4th year',
+        id: 'computer-3',
       },
     ],
     icon: UserPen,
   },
   {
-    title: "Blogs",
+    title: 'Blogs',
     list: [
       {
-        title: "be prepared for final exam",
-        id: "blog-1",
+        title: 'be prepared for final exam',
+        id: 'blog-1',
       },
       {
-        title: "An assignment is set to be delvered on monday",
-        id: "blog-2",
+        title: 'An assignment is set to be delivered on monday',
+        id: 'blog-2',
       },
       {
-        title: "How does postgres work under the hood",
-        id: "blog-3",
+        title: 'How does postgres work under the hood',
+        id: 'blog-3',
       },
     ],
-    id: "class-2",
+    id: 'class-2',
     icon: UserPen,
   },
   {
-    title: "Exam",
-    id: "exam-3",
+    title: 'Exam',
+    id: 'exam-3',
     list: [
-      { title: "Maths final chapter 4", id: "Exam 1" },
+      { title: 'Maths final chapter 4', id: 'Exam 1' },
 
-      { title: "Object Oriented Programming mid chapter 4", id: "Exam 1" },
+      { title: 'Object Oriented Programming mid chapter 4', id: 'Exam 1' },
     ],
     icon: SquareMenu,
   },
@@ -135,8 +135,6 @@ export function AppSidebar() {
             <DropdownMenu>
               <SidebarMenuButton size="lg" asChild className="">
                 <Link href="/home">
-                  {/* <div className="flex aspect-square size-8 items-cengter justify-center rounded-l bg-sidebar-primary text-gray-app"> */}
-                  {/* <GalleryVerticalEnd className="size-4" /> */}
                   <Image
                     src={Logo}
                     width={32}
@@ -152,7 +150,7 @@ export function AppSidebar() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className={"size-7 ml-auto"}
+                      className={'ml-auto size-7'}
                     >
                       <Icon name="ChevronsUpDown" />
                       <span className="sr-only">Switch User</span>
@@ -170,17 +168,17 @@ export function AppSidebar() {
                   Teams
                 </DropdownMenuLabel>
                 <DropdownMenuItem className="p-2">
-                  <div className="flex justify-between grow">
+                  <div className="flex grow justify-between">
                     <div className="font-medium">Teshome Abebe</div>
-                    <span className="font-medium text-gray-solid text-sm">
+                    <span className="text-sm font-medium text-gray-solid">
                       student
                     </span>
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="p-2">
-                  <div className="flex justify-between grow">
+                  <div className="flex grow justify-between">
                     <div className="font-medium">Teshome Abebe</div>
-                    <span className="font-medium text-gray-solid text-sm">
+                    <span className="text-sm font-medium text-gray-solid">
                       teacher
                     </span>
                   </div>
@@ -217,24 +215,24 @@ export function AppSidebar() {
         </SidebarGroup>
         <SidebarSeparator />
         <SidebarGroup>
-          <SidebarGroupLabel>Recents</SidebarGroupLabel>
+          <SidebarGroupLabel>Recent</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {recents.map((recents) => (
-                <Collapsible key={recents.id} className="group/collapsible">
+              {recent.map((recent) => (
+                <Collapsible key={recent.id} className="group/collapsible">
                   <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton asChild>
-                        <Link href={"#"}>
-                          <recents.icon />
-                          <span className="font-medium">{recents.title}</span>
+                        <Link href={'#'}>
+                          <recent.icon />
+                          <span className="font-medium">{recent.title}</span>
                           <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                         </Link>
                       </SidebarMenuButton>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
                       <SidebarMenuSub>
-                        {recents.list.map((list) => (
+                        {recent.list.map((list) => (
                           <SidebarMenuSubItem key={list.id}>
                             <SidebarMenuSubButton>
                               {list.title}

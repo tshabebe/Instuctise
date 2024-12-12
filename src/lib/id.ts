@@ -41,5 +41,6 @@ export function generateId(
     '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
     length,
   )();
+  // eslint-disable-next-line security/detect-object-injection
   return prefix ? `${prefixes[prefix]}${separator}${id}` : id;
 }

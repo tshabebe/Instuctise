@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { TRPCProvider } from '@/lib/trpc/client';
 import { GeistSans } from 'geist/font/sans';
+import { ThemeProvider } from '@/provider/theme.provider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +17,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={GeistSans.className}>
-        <TRPCProvider>{children}</TRPCProvider>
+        <TRPCProvider>
+          <ThemeProvider
+            attribute="class"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </TRPCProvider>
       </body>
     </html>
   );

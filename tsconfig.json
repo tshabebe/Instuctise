@@ -45,6 +45,7 @@
     "next-env.d.ts",
     "reset.d.ts",
     "eslint.d.ts",
+    "src/app/png.d.ts",
     "**/*.ts",
     "**/*.js",
     "**/*.mjs",

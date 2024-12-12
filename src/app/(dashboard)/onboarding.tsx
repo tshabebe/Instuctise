@@ -1,5 +1,5 @@
-"use client";
-import { Button } from "@/primitives/button";
+'use client';
+import { Button } from '@/primitives/button';
 import {
   Dialog,
   DialogContent,
@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/primitives/dialog";
+} from '@/primitives/dialog';
 import {
   Form,
   FormControl,
@@ -15,14 +15,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/primitives/form";
-import { Input } from "@/primitives/input";
-import { Label } from "@/primitives/label";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateClass, ZCreateClass } from "@/server/router/onboarding.schema";
-import { trpc } from "@/lib/trpc/client";
-import { Skeleton } from "@/primitives/skeleton";
+} from '@/primitives/form';
+import { Input } from '@/primitives/input';
+import { Label } from '@/primitives/label';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { CreateClass} from '@/server/router/onboarding.schema';
+import { ZCreateClass } from '@/server/router/onboarding.schema';
+import { trpc } from '@/lib/trpc/client';
+import { Skeleton } from '@/primitives/skeleton';
 
 export function Onboarding() {
   return (
@@ -46,7 +47,7 @@ export function Onboarding() {
           <DialogTrigger asChild>
             <Button>Create class</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] w-80">
+          <DialogContent className="w-80 sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Create class</DialogTitle>
             </DialogHeader>
@@ -116,16 +117,16 @@ function CreateClassOnboarding() {
                     <Button
                       type="button"
                       key={username}
-                      variant={"ghost"}
-                      size={"sm"}
+                      variant={'ghost'}
+                      size={'sm'}
                       onClick={() => {
-                        form.setValue("username", username);
+                        form.setValue('username', username);
                       }}
                     >
                       <li>{username}</li>
                     </Button>
                   ))
-                : "no data found"}
+                : 'no data found'}
             </ul>
           )}
         </div>
