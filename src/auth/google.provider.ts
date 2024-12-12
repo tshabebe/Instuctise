@@ -5,7 +5,7 @@ import { db } from '@/db';
 import { eq } from 'drizzle-orm';
 import { oauthAccountTable, userTable } from '@/db/schema';
 import { generateId } from '@/lib/id';
-import { env } from '@/env';
+import { env } from '@/config/env';
 import { getBaseUrl } from '@/lib/utils';
 import {
   createSession,
