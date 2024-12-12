@@ -14,7 +14,7 @@ export default function Home() {
   );
 }
 
-import { HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
 
 function ToggleTheme(props: HTMLAttributes<HTMLButtonElement>) {
   const { theme, setTheme } = useTheme();
@@ -24,7 +24,13 @@ function ToggleTheme(props: HTMLAttributes<HTMLButtonElement>) {
         size={'icon'}
         variant={'ghost'}
         onClick={
-          theme === 'dark' ? () => setTheme('light') : () => setTheme('dark')
+          theme === 'dark'
+            ? () => {
+                setTheme('light');
+              }
+            : () => {
+                setTheme('dark');
+              }
         }
         {...props}
       >

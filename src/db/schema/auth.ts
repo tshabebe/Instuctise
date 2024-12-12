@@ -8,7 +8,7 @@ export const userTable = pgTable('user', {
   username: text('username'),
   email: text('email').unique(),
   userRole: text('user_role', { enum: ['admin', 'user', 'student'] }),
-  avatorUrl: text('avator_url'),
+  avatarUrl: text('avatar_url'),
   password: text('password'),
 });
 

@@ -122,7 +122,7 @@ export async function validateGoogleCallback(
       id: userId,
       email,
       name,
-      avatorUrl: picture,
+      avatarUrl: picture,
     });
     await db.insert(oauthAccountTable).values({
       providerId: 'google',

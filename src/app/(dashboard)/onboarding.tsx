@@ -20,7 +20,8 @@ import { Input } from '@/primitives/input';
 import { Label } from '@/primitives/label';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateClass, ZCreateClass } from '@/server/router/onboarding.schema';
+import type { CreateClass} from '@/server/router/onboarding.schema';
+import { ZCreateClass } from '@/server/router/onboarding.schema';
 import { trpc } from '@/lib/trpc/client';
 import { Skeleton } from '@/primitives/skeleton';
 
@@ -46,7 +47,7 @@ export function Onboarding() {
           <DialogTrigger asChild>
             <Button>Create class</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] w-80">
+          <DialogContent className="w-80 sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Create class</DialogTitle>
             </DialogHeader>

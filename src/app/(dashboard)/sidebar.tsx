@@ -74,17 +74,17 @@ const items = [
   },
 ];
 
-const recents = [
+const recent = [
   {
     title: 'class',
-    id: 'bolg-1',
+    id: 'blog-1',
     list: [
       {
         title: 'Computer Science',
         id: 'computer-1',
       },
       {
-        title: 'Business Managment',
+        title: 'Business Management',
         id: 'computer-2',
       },
       {
@@ -102,7 +102,7 @@ const recents = [
         id: 'blog-1',
       },
       {
-        title: 'An assignment is set to be delvered on monday',
+        title: 'An assignment is set to be delivered on monday',
         id: 'blog-2',
       },
       {
@@ -135,8 +135,6 @@ export function AppSidebar() {
             <DropdownMenu>
               <SidebarMenuButton size="lg" asChild className="">
                 <Link href="/home">
-                  {/* <div className="flex aspect-square size-8 items-cengter justify-center rounded-l bg-sidebar-primary text-gray-app"> */}
-                  {/* <GalleryVerticalEnd className="size-4" /> */}
                   <Image
                     src={Logo}
                     width={32}
@@ -152,7 +150,7 @@ export function AppSidebar() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className={'size-7 ml-auto'}
+                      className={'ml-auto size-7'}
                     >
                       <Icon name="ChevronsUpDown" />
                       <span className="sr-only">Switch User</span>
@@ -170,17 +168,17 @@ export function AppSidebar() {
                   Teams
                 </DropdownMenuLabel>
                 <DropdownMenuItem className="p-2">
-                  <div className="flex justify-between grow">
+                  <div className="flex grow justify-between">
                     <div className="font-medium">Teshome Abebe</div>
-                    <span className="font-medium text-gray-solid text-sm">
+                    <span className="text-sm font-medium text-gray-solid">
                       student
                     </span>
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="p-2">
-                  <div className="flex justify-between grow">
+                  <div className="flex grow justify-between">
                     <div className="font-medium">Teshome Abebe</div>
-                    <span className="font-medium text-gray-solid text-sm">
+                    <span className="text-sm font-medium text-gray-solid">
                       teacher
                     </span>
                   </div>
@@ -217,24 +215,24 @@ export function AppSidebar() {
         </SidebarGroup>
         <SidebarSeparator />
         <SidebarGroup>
-          <SidebarGroupLabel>Recents</SidebarGroupLabel>
+          <SidebarGroupLabel>Recent</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {recents.map((recents) => (
-                <Collapsible key={recents.id} className="group/collapsible">
+              {recent.map((recent) => (
+                <Collapsible key={recent.id} className="group/collapsible">
                   <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton asChild>
                         <Link href={'#'}>
-                          <recents.icon />
-                          <span className="font-medium">{recents.title}</span>
+                          <recent.icon />
+                          <span className="font-medium">{recent.title}</span>
                           <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                         </Link>
                       </SidebarMenuButton>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
                       <SidebarMenuSub>
-                        {recents.list.map((list) => (
+                        {recent.list.map((list) => (
                           <SidebarMenuSubItem key={list.id}>
                             <SidebarMenuSubButton>
                               {list.title}

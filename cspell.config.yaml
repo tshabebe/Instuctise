@@ -1,5 +1,5 @@
 $schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
-version: '0.2'
+version: "0.2"
 ignorePaths:
   - node_modules
   - bun.lockb
@@ -7,17 +7,27 @@ ignorePaths:
   - .gitignore
   - .next
   - drizzle
-  - '**/*.svg'
+  - "**/*.svg"
   - .vscode/extensions.json
   - public
   - tsconfig.tsbuildinfo
 words:
+  - Abebe
+  - callees
   - classname
   - clsx
+  - Elipssis
   - ianvs
+  - Instructise
+  - lockb
+  - nums
+  - oslojs
+  - Serverside
+  - shadcn
   - superjson
   - tanstack
+  - Teshome
   - trpc
-  - typecheck
+  - tseslint
   - turbopack
-  - lockb
+  - typecheck

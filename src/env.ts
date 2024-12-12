@@ -12,7 +12,6 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string().min(1).optional(),
     GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
     GOOGLE_AUTH: z.string().min(1),
-    DATABASE_URL_UNPOOLED: z.string().min(1),
   },
   /*
    * Environment variables available on the client (and server).
@@ -32,6 +31,5 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env['GOOGLE_CLIENT_ID'],
     GOOGLE_CLIENT_SECRET: process.env['GOOGLE_CLIENT_SECRET'],
     GOOGLE_AUTH: process.env['GOOGLE_AUTH'],
-    DATABASE_URL_UNPOOLED: process.env['DATABASE_URL_UNPOOLED'],
   },
 });

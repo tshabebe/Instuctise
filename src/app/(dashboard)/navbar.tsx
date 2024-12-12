@@ -1,7 +1,7 @@
-import { Avatar, AvatarFallback, AvatarImage } from './avator';
+import { Avatar, AvatarFallback, AvatarImage } from './avatar';
 
 import { SidebarTrigger } from '@/primitives/sidebar';
-import { BreadcrumbNav } from './breadcrum';
+import { BreadcrumbNav } from './breadcrumb';
 
 export function Navbar() {
   return (
