@@ -6,6 +6,12 @@ import { serverClient } from '@/lib/trpc/serverClient';
 import { redirect } from 'next/navigation';
 import { Onboarding } from './onboarding';
 import { SidebarProvider } from '@/primitives/sidebar';
+
+export const metadata = {
+  title: 'Instructise',
+  description: 'Instructise makes keeps you organized',
+};
+
 export default async function DashboardLayout({
   children,
 }: {
@@ -17,7 +23,7 @@ export default async function DashboardLayout({
     redirect('/login');
   }
   const sections = await serverClient.onboardingRouter.getSection();
-  if (!sections) {
+  if (sections) {
     return <Onboarding />;
   }
   return (

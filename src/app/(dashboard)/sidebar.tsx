@@ -27,7 +27,7 @@ import {
 } from '@/primitives/sidebar';
 import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '../Icon.png';
+import Logo from '../icon.png';
 import { usePathname } from 'next/navigation';
 import { Icon } from '@/primitives/icon';
 import {
