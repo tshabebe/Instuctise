@@ -24,9 +24,10 @@ import type { CreateClassInput } from '@/server/router/onboarding.schema';
 import { ZCreateClassInput } from '@/server/router/onboarding.schema';
 import { trpc } from '@/lib/trpc/client';
 import { Skeleton } from '@/primitives/skeleton';
-import hotToast, { Toaster } from 'react-hot-toast';
-
-const notify = () => hotToast('Here is your toast.');
+import { useNotifications } from '@/components/toaster/notification.store';
+import { Notifications } from '@/components/toaster/notifications';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { paths } from '@/config/paths';
 
 export function Onboarding() {
   return (
@@ -65,13 +66,21 @@ function CreateClassOnboarding() {
   const form = useForm<CreateClassInput>({
     resolver: zodResolver(ZCreateClassInput),
   });
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirectTo');
+
+  const { addNotification } = useNotifications();
   const { data, isPending } = trpc.onboardingRouter.getUsername.useQuery();
   const createClass = trpc.onboardingRouter.createClass.useMutation({
     onSuccess: () => {
-      notify();
+      router.replace(
+        redirectTo ? decodeURIComponent(redirectTo) : paths.app.class.getHref(),
+      );
     },
-    onError: () => {
-      notify();
+    onError: (error) => {
+      addNotification({ type: 'error', title: error.message });
     },
   });
   return (
@@ -143,7 +152,8 @@ function CreateClassOnboarding() {
         >
           Create class
         </Button>
-        <Toaster />
+        {/* <Toaster /> */}
+        <Notifications />
       </form>
     </Form>
   );
