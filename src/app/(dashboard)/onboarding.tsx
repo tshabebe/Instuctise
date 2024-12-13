@@ -20,10 +20,13 @@ import { Input } from '@/primitives/input';
 import { Label } from '@/primitives/label';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { CreateClass} from '@/server/router/onboarding.schema';
-import { ZCreateClass } from '@/server/router/onboarding.schema';
+import type { CreateClassInput } from '@/server/router/onboarding.schema';
+import { ZCreateClassInput } from '@/server/router/onboarding.schema';
 import { trpc } from '@/lib/trpc/client';
 import { Skeleton } from '@/primitives/skeleton';
+import hotToast, { Toaster } from 'react-hot-toast';
+
+const notify = () => hotToast('Here is your toast.');
 
 export function Onboarding() {
   return (
@@ -52,11 +55,6 @@ export function Onboarding() {
               <DialogTitle>Create class</DialogTitle>
             </DialogHeader>
             <CreateClassOnboarding />
-            {/* <DialogFooter> */}
-            {/*   <Button type="submit" className="w-full"> */}
-            {/*     Create class */}
-            {/*   </Button> */}
-            {/* </DialogFooter> */}
           </DialogContent>
         </Dialog>
       </div>
@@ -64,16 +62,23 @@ export function Onboarding() {
   );
 }
 function CreateClassOnboarding() {
-  const form = useForm<CreateClass>({
-    resolver: zodResolver(ZCreateClass),
+  const form = useForm<CreateClassInput>({
+    resolver: zodResolver(ZCreateClassInput),
   });
   const { data, isPending } = trpc.onboardingRouter.getUsername.useQuery();
-  const { mutate } = trpc.onboardingRouter.createClass.useMutation();
+  const createClass = trpc.onboardingRouter.createClass.useMutation({
+    onSuccess: () => {
+      notify();
+    },
+    onError: () => {
+      notify();
+    },
+  });
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((data) => {
-          mutate(data);
+          createClass.mutate(data);
         })}
         className="flex flex-col gap-4"
       >
@@ -130,9 +135,15 @@ function CreateClassOnboarding() {
             </ul>
           )}
         </div>
-        <Button type="submit" className="w-full">
+        <Button
+          type="submit"
+          className="w-full"
+          isLoading={createClass.isPending}
+          disabled={createClass.isPending}
+        >
           Create class
         </Button>
+        <Toaster />
       </form>
     </Form>
   );
