@@ -152,7 +152,6 @@ function CreateClassOnboarding() {
         >
           Create class
         </Button>
-        {/* <Toaster /> */}
         <Notifications />
       </form>
     </Form>
