@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "clean": "bun run rm -rf .next node_modules *.tsbuildinfo next-env.d.ts",
     "db:drop": "drizzle-kit drop",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
