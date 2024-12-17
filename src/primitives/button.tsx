@@ -20,6 +20,7 @@ const buttonVariants = cva(
           'border border-orange-subtle-border bg-gray-element text-foreground-muted hover:bg-gray-element-hover hover:text-foreground',
         ghost:
           'text-foreground-muted hover:bg-gray-element hover:text-foreground',
+        ghostSelected: 'bg-gray-element text-foreground',
         // 'bg-indigo text-black',
         link: 'relative bg-gradient-to-br from-salmon to-orange bg-clip-text text-transparent before:absolute before:bottom-0 before:h-px before:w-[calc(100%-24px)] before:rounded-full before:bg-gradient-to-br before:from-salmon before:to-orange hover:opacity-90',
         subtlePrimary: 'bg-orange-subtle text-orange-foreground-muted',

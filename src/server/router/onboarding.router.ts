@@ -56,12 +56,16 @@ export const onboardingRouter = router({
             });
           }
 
+          opts.ctx.headers.set('onboarding', 'created sections');
+          console.log(opts.ctx.headers.values());
           return {
             name: firstClass.name,
           };
         });
       } catch (error) {
-        console.log(error);
+        if (error instanceof TRPCError) {
+          throw error;
+        }
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Could not create class',

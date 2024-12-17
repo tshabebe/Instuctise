@@ -129,8 +129,7 @@ export async function validateGoogleCallback(
       providerUserId: sub,
       userId,
     });
-    // const session = await lucia.createSession(userId, {});
-    // const sessionCookie = lucia.createSessionCookie(session.id);
+
     const sessionToken = generateSessionToken();
     const session = await createSession(sessionToken, userId);
     await setSessionTokenCookie(sessionToken, session.expiresAt);
