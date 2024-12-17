@@ -5,7 +5,7 @@ import { db } from '@/db';
 import { eq } from 'drizzle-orm';
 import { oauthAccountTable, userTable } from '@/db/schema';
 import { generateId } from '@/lib/id';
-import { env } from '@/env';
+import { env } from '@/config/env';
 import { getBaseUrl } from '@/lib/utils';
 import {
   createSession,
@@ -129,8 +129,7 @@ export async function validateGoogleCallback(
       providerUserId: sub,
       userId,
     });
-    // const session = await lucia.createSession(userId, {});
-    // const sessionCookie = lucia.createSessionCookie(session.id);
+
     const sessionToken = generateSessionToken();
     const session = await createSession(sessionToken, userId);
     await setSessionTokenCookie(sessionToken, session.expiresAt);

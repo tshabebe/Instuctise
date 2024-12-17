@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 import { validateSession } from '@/auth/auth';
-import { env } from '@/env';
+import { env } from '@/config/env';
 
 const googleAuthIsEnabled =
   env.GOOGLE_CLIENT_ID !== undefined && env.GOOGLE_CLIENT_SECRET !== undefined;

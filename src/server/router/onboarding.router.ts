@@ -1,70 +1,118 @@
 import { section } from '@/db/schema';
 import { authedProcedure, router } from '../trpc';
 import { eq } from 'drizzle-orm';
-import { ZCreateClass } from './onboarding.schema';
+import { ZCreateClassInput, ZCreateClassOutput } from './onboarding.schema';
 import { generateUsername } from 'unique-username-generator';
 import { TRPCError } from '@trpc/server';
 
 export const onboardingRouter = router({
   getSection: authedProcedure.query(async (opts) => {
-    const [sections] = await opts.ctx.db
-      .select()
-      .from(section)
-      .where(eq(section.userId, opts.ctx.user.id))
-      .limit(1);
-    return sections;
-  }),
-  createClass: authedProcedure.input(ZCreateClass).mutation(async (opts) => {
     try {
-      await opts.ctx.db.transaction(async (tx) => {
-        const [exists] = await opts.ctx.db
-          .select()
-          .from(section)
-          .where(eq(section.username, opts.input.username))
-          .execute();
-
-        if (exists) {
-          throw new Error('username already taken');
-        }
-        const [firstClass] = await tx
-          .insert(section)
-          .values({
-            name: opts.input.name,
-            userId: opts.ctx.user.id,
-            username: opts.input.username,
-          })
-          .returning();
-        return firstClass;
-      });
+      const [sections] = await opts.ctx.db
+        .select()
+        .from(section)
+        .where(eq(section.userId, opts.ctx.user.id))
+        .limit(1);
+      return sections;
     } catch (error) {
-      console.log(error);
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
-        message: 'Could not create class',
+        message: 'Failed to fetch section',
         cause: error,
       });
     }
   }),
-  getUsername: authedProcedure.query(async (opts) => {
-    const suggestions = [];
-    const requiredCount = 2;
+  createClass: authedProcedure
+    .input(ZCreateClassInput)
+    .output(ZCreateClassOutput)
+    .mutation(async (opts) => {
+      try {
+        return await opts.ctx.db.transaction(async (tx) => {
+          const [exists] = await opts.ctx.db
+            .select()
+            .from(section)
+            .where(eq(section.username, opts.input.username))
+            .execute();
 
-    while (suggestions.length < requiredCount) {
-      const username = generateUsername();
+          if (exists) {
+            throw new TRPCError({
+              code: 'CONFLICT',
+              message: 'username already taken',
+            });
+          }
+          const [firstClass] = await tx
+            .insert(section)
+            .values({
+              name: opts.input.name,
+              userId: opts.ctx.user.id,
+              username: opts.input.username,
+            })
+            .returning();
 
-      const exists = await opts.ctx.db
-        .select()
-        .from(section)
-        .where(eq(section.username, username))
-        .execute();
+          if (!firstClass) {
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: 'Failed to create class, Please try again',
+            });
+          }
 
-      if (exists.length === 0) {
-        suggestions.push(username);
+          opts.ctx.headers.set('onboarding', 'created sections');
+          console.log(opts.ctx.headers.values());
+          return {
+            name: firstClass.name,
+          };
+        });
+      } catch (error) {
+        if (error instanceof TRPCError) {
+          throw error;
+        }
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Could not create class',
+          cause: error,
+        });
       }
-    }
+    }),
+  getUsername: authedProcedure.query(async (opts) => {
+    try {
+      const suggestions = [];
+      const requiredCount = 2;
+      const maxAttempts = 10; // Prevent infinite loop
+      let attempts = 0;
 
-    return {
-      suggestions,
-    };
+      while (suggestions.length < requiredCount && attempts < maxAttempts) {
+        attempts++;
+
+        const username = generateUsername();
+        const exists = await opts.ctx.db
+          .select()
+          .from(section)
+          .where(eq(section.username, username))
+          .execute();
+
+        if (exists.length === 0) {
+          suggestions.push(username);
+        }
+      }
+
+      if (suggestions.length < requiredCount) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to generate unique usernames. Please try again.',
+        });
+      }
+      return {
+        suggestions,
+      };
+    } catch (error) {
+      if (error instanceof TRPCError) {
+        throw error;
+      }
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to generate username suggestions',
+        cause: error,
+      });
+    }
   }),
 });

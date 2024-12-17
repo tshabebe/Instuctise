@@ -3,7 +3,6 @@ import { Button } from '@/primitives/button';
 import {
   Dialog,
   DialogContent,
-  // DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -20,11 +19,14 @@ import { Input } from '@/primitives/input';
 import { Label } from '@/primitives/label';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { CreateClass} from '@/server/router/onboarding.schema';
-import { ZCreateClass } from '@/server/router/onboarding.schema';
+import type { CreateClassInput } from '@/server/router/onboarding.schema';
+import { ZCreateClassInput } from '@/server/router/onboarding.schema';
 import { trpc } from '@/lib/trpc/client';
 import { Skeleton } from '@/primitives/skeleton';
-
+import { useRouter, useSearchParams } from 'next/navigation';
+import { paths } from '@/config/paths';
+import { Toaster } from './error.toast';
+import { useState } from 'react';
 export function Onboarding() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
@@ -52,11 +54,6 @@ export function Onboarding() {
               <DialogTitle>Create class</DialogTitle>
             </DialogHeader>
             <CreateClassOnboarding />
-            {/* <DialogFooter> */}
-            {/*   <Button type="submit" className="w-full"> */}
-            {/*     Create class */}
-            {/*   </Button> */}
-            {/* </DialogFooter> */}
           </DialogContent>
         </Dialog>
       </div>
@@ -64,16 +61,36 @@ export function Onboarding() {
   );
 }
 function CreateClassOnboarding() {
-  const form = useForm<CreateClass>({
-    resolver: zodResolver(ZCreateClass),
+  const form = useForm<CreateClassInput>({
+    resolver: zodResolver(ZCreateClassInput),
   });
+
+  const [selectedUsername, setSelectedUsername] = useState<string | null>(null);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirectTo');
+
   const { data, isPending } = trpc.onboardingRouter.getUsername.useQuery();
-  const { mutate } = trpc.onboardingRouter.createClass.useMutation();
+
+  const createClass = trpc.onboardingRouter.createClass.useMutation({
+    onSuccess: () => {
+      router.replace(
+        redirectTo ? decodeURIComponent(redirectTo) : paths.app.class.getHref(),
+      );
+    },
+  });
+
+  const handleUsernameSelection = (username: string) => {
+    setSelectedUsername(username);
+    form.setValue('username', username);
+  };
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((data) => {
-          mutate(data);
+          createClass.mutate(data);
         })}
         className="flex flex-col gap-4"
       >
@@ -98,7 +115,6 @@ function CreateClassOnboarding() {
               <FormLabel>username</FormLabel>
               <FormControl>
                 <Input placeholder="Enter username" {...field}></Input>
-                {/* <Button variant={"ghost"}>@teshome</Button> */}
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -111,28 +127,40 @@ function CreateClassOnboarding() {
               <Skeleton className="h-4 w-32" />
             </>
           ) : (
-            <ul className="flex flex-wrap">
+            <ul className="flex grow flex-wrap justify-between">
               {data
                 ? data.suggestions.map((username) => (
-                    <Button
-                      type="button"
-                      key={username}
-                      variant={'ghost'}
-                      size={'sm'}
-                      onClick={() => {
-                        form.setValue('username', username);
-                      }}
-                    >
-                      <li>{username}</li>
-                    </Button>
+                    <li key={username}>
+                      <Button
+                        type="button"
+                        variant={
+                          selectedUsername === username
+                            ? 'ghostSelected'
+                            : 'ghost'
+                        }
+                        size={'sm'}
+                        onClick={() => {
+                          handleUsernameSelection(username);
+                        }}
+                        className="transition-colors duration-200"
+                      >
+                        <li>{username}</li>
+                      </Button>
+                    </li>
                   ))
                 : 'no data found'}
             </ul>
           )}
         </div>
-        <Button type="submit" className="w-full">
-          Create class
+        <Button
+          type="submit"
+          className="w-full"
+          isLoading={createClass.isPending}
+          disabled={createClass.isPending}
+        >
+          {createClass.isPending ? 'Redirecting' : 'Create class'}
         </Button>
+        {createClass.isError && <Toaster message={createClass.error.message} />}
       </form>
     </Form>
   );
