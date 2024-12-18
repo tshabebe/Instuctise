@@ -1,11 +1,44 @@
-import { section } from '@/db/schema';
+import { section, sectionRequest } from '@/db/schema';
 import { authedProcedure, router } from '../trpc';
 import { eq } from 'drizzle-orm';
-import { ZCreateClassInput, ZCreateClassOutput } from './onboarding.schema';
+import {
+  ZCreateClassInput,
+  ZCreateClassOutput,
+  ZJoinSection,
+} from './onboarding.schema';
 import { generateUsername } from 'unique-username-generator';
 import { TRPCError } from '@trpc/server';
 
 export const onboardingRouter = router({
+  joinSection: authedProcedure.input(ZJoinSection).mutation(async (opts) => {
+    try {
+      const JoinSection = await opts.ctx.db.query.section.findFirst({
+        where: eq(section.username, opts.input.username),
+      });
+
+      if (!JoinSection) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'no classes found with this username',
+        });
+      }
+
+      opts.ctx.db.insert(sectionRequest).values({
+        sectionId: JoinSection.id,
+        userId: opts.ctx.user.id,
+      });
+    } catch (error) {
+      if (error instanceof TRPCError) {
+        throw error;
+      }
+
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Could not send request',
+        cause: error,
+      });
+    }
+  }),
   getSection: authedProcedure.query(async (opts) => {
     try {
       const [sections] = await opts.ctx.db

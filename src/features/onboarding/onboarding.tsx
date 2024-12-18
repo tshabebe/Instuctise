@@ -16,7 +16,6 @@ import {
   FormMessage,
 } from '@/primitives/form';
 import { Input } from '@/primitives/input';
-import { Label } from '@/primitives/label';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { CreateClassInput } from '@/server/router/onboarding.schema';
@@ -27,13 +26,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { paths } from '@/config/paths';
 import { Toaster } from './error.toast';
 import { useState } from 'react';
+import JoinInput from './Input.end';
 export function Onboarding() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <div className="flex basis-48 flex-col gap-4">
-        <div>
-          <Label htmlFor="join">Join</Label>
-          <Input id="join" placeholder="@class" className="w-72" />
+        <div className="flex">
+          <JoinInput />
         </div>
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
@@ -47,7 +46,7 @@ export function Onboarding() {
         </div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button>Create class</Button>
+            <Button variant={'subtlePrimary'}>Create class</Button>
           </DialogTrigger>
           <DialogContent className="w-80 sm:max-w-[425px]">
             <DialogHeader>
