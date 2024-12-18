@@ -26,6 +26,8 @@ const buttonVariants = cva(
         subtlePrimary: 'bg-orange-subtle text-orange-foreground-muted',
         subtleOutline:
           'border border-orange-subtle-border text-foreground-muted hover:bg-gray-element-hover hover:text-foreground',
+        search:
+          'inline-flex items-center gap-2 rounded-e-lg border border-gray-subtle-border bg-gray-element px-3 text-sm font-medium text-foreground-muted outline-offset-2 transition-colors hover:bg-gray-element-hover hover:text-foreground focus:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-solid-hover disabled:cursor-not-allowed disabled:opacity-50',
       },
       size: {
         default: 'px-4 py-2',
