@@ -1,7 +1,7 @@
 'use client';
 
-import { paths } from '@/config/paths';
 import { trpc } from '@/lib/trpc/client';
+import { Button } from '@/primitives/button';
 import {
   Form,
   FormControl,
@@ -10,43 +10,67 @@ import {
   FormLabel,
   FormMessage,
 } from '@/primitives/form';
-import { Icon } from '@/primitives/icon';
 import { Input } from '@/primitives/input';
-import type { JoinSection } from '@/server/router/onboarding.schema';
-import { ZJoinSection } from '@/server/router/onboarding.schema';
+import type {
+  JoinSectionInput,
+  JoinSectionOutput,
+} from '@/server/router/onboarding.schema';
+import { ZJoinSectionInput } from '@/server/router/onboarding.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter, useSearchParams } from 'next/navigation';
+import type { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Icon } from '@/primitives/icon';
 
 export default function JoinInput() {
+  const [searchResult, setSearchResult] = useState<JoinSectionOutput>();
+
+  const requestSection = trpc.onboardingRouter.requestSection.useMutation();
   return (
     <div className="flex flex-col gap-2">
-      <CreateClassOnboarding />
-      <div className="flex justify-center gap-4 rounded-lg bg-gray-subtle p-2 text-sm font-medium">
-        <span>Teshome Abebe</span>
-        <span className="text-gray-solid">@class234</span>
-        <button className="text-orange-foreground-muted">request</button>
-      </div>
+      <CreateClassOnboarding onSearchResult={setSearchResult} />
+      {searchResult && (
+        <div className="flex justify-center gap-4 rounded-lg bg-gray-subtle p-2 text-sm font-medium">
+          <span>{searchResult.name}</span>
+          <span className="text-gray-solid">{'@' + searchResult.username}</span>
+          <button
+            className="text-orange-foreground-muted"
+            onClick={() => {
+              requestSection.mutate(searchResult);
+            }}
+          >
+            {requestSection.isSuccess && 'sent'}
+            {requestSection.isPending && 'loading'}
+            {!(requestSection.isPending || requestSection.isSuccess) &&
+              'request'}
+          </button>
+        </div>
+      )}
+      {requestSection.isError && (
+        <p className="text-[0.8rem] font-medium text-red-solid">
+          <Icon name="CircleX" className="mr-1.5 inline-block size-4" />
+          {requestSection.error.message}
+        </p>
+      )}
     </div>
   );
 }
-function CreateClassOnboarding() {
-  const form = useForm<JoinSection>({
-    resolver: zodResolver(ZJoinSection),
+
+function CreateClassOnboarding({
+  onSearchResult,
+}: {
+  onSearchResult: Dispatch<SetStateAction<JoinSectionOutput | undefined>>;
+}) {
+  const form = useForm<JoinSectionInput>({
+    resolver: zodResolver(ZJoinSectionInput),
     defaultValues: {
       username: '',
     },
   });
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirectTo = searchParams.get('redirectTo');
-
   const createClass = trpc.onboardingRouter.joinSection.useMutation({
-    onSuccess: () => {
-      router.replace(
-        redirectTo ? decodeURIComponent(redirectTo) : paths.app.class.getHref(),
-      );
+    onSuccess: (data) => {
+      onSearchResult(data);
     },
     onError: (error) => {
       form.setError('username', {
@@ -76,13 +100,17 @@ function CreateClassOnboarding() {
                     placeholder="@classname"
                     {...field}
                   />
-                  <button
+                  <Button
                     type="submit"
-                    className="inline-flex items-center gap-2 rounded-e-lg border border-gray-subtle-border bg-gray-element px-3 text-sm font-medium text-foreground-muted outline-offset-2 transition-colors hover:bg-gray-element-hover hover:text-foreground focus:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-solid-hover disabled:cursor-not-allowed disabled:opacity-50"
+                    variant={'search'}
+                    isLoading={createClass.isPending}
+                    disabled={createClass.isPending}
+                    // TODO add more variants to button that works
+                    className="rounded-none rounded-e-lg py-1"
                   >
-                    <Icon name="Search" size={16} />
+                    {!createClass.isPending && <Icon name="Search" size={16} />}
                     <span>Search</span>
-                  </button>
+                  </Button>
                 </div>
               </FormControl>
               <FormMessage />

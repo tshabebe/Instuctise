@@ -1,17 +1,21 @@
 import { section, sectionRequest } from '@/db/schema';
 import { authedProcedure, router } from '../trpc';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import {
   ZCreateClassInput,
   ZCreateClassOutput,
-  ZJoinSection,
+  ZJoinSectionInput,
+  ZJoinSectionOutput,
+  ZRequestSectionInput,
 } from './onboarding.schema';
 import { generateUsername } from 'unique-username-generator';
 import { TRPCError } from '@trpc/server';
 
 export const onboardingRouter = router({
-  joinSection: authedProcedure.input(ZJoinSection).mutation(async (opts) => {
-    try {
+  joinSection: authedProcedure
+    .input(ZJoinSectionInput)
+    .output(ZJoinSectionOutput)
+    .mutation(async (opts) => {
       const JoinSection = await opts.ctx.db.query.section.findFirst({
         where: eq(section.username, opts.input.username),
       });
@@ -22,23 +26,32 @@ export const onboardingRouter = router({
           message: 'no classes found with this username',
         });
       }
+      return JoinSection;
+    }),
+  requestSection: authedProcedure
+    .input(ZRequestSectionInput)
+    .mutation(async (opts) => {
+      // check if the user has already requested
+      const alreadyRequested = await opts.ctx.db.query.sectionRequest.findFirst(
+        {
+          where: and(
+            eq(sectionRequest.userId, opts.ctx.user.id),
+            eq(sectionRequest.sectionId, opts.input.id),
+          ),
+        },
+      );
 
-      opts.ctx.db.insert(sectionRequest).values({
-        sectionId: JoinSection.id,
+      if (alreadyRequested) {
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: 'request already sent',
+        });
+      }
+      await opts.ctx.db.insert(sectionRequest).values({
+        sectionId: opts.input.id,
         userId: opts.ctx.user.id,
       });
-    } catch (error) {
-      if (error instanceof TRPCError) {
-        throw error;
-      }
-
-      throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Could not send request',
-        cause: error,
-      });
-    }
-  }),
+    }),
   getSection: authedProcedure.query(async (opts) => {
     try {
       const [sections] = await opts.ctx.db

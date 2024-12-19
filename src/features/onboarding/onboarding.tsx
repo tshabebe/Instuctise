@@ -46,7 +46,9 @@ export function Onboarding() {
         </div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant={'subtlePrimary'}>Create class</Button>
+            <Button variant={'subtlePrimary'} className="rounded-md py-2">
+              Create class
+            </Button>
           </DialogTrigger>
           <DialogContent className="w-80 sm:max-w-[425px]">
             <DialogHeader>

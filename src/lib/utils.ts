@@ -13,5 +13,5 @@ export function getBaseUrl() {
   if (process.env['VERCEL_URL']) {
     return `https://${process.env['VERCEL_URL']}`;
   }
-  return `https://ideal-space-potato-976qq7xrw4q727wqr-3000.app.github.dev`;
+  return `https://solid-zebra-wq4jv4jpw7wf5455-3000.app.github.dev`;
 }
