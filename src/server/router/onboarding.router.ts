@@ -1,11 +1,57 @@
-import { section } from '@/db/schema';
+import { section, sectionRequest } from '@/db/schema';
 import { authedProcedure, router } from '../trpc';
-import { eq } from 'drizzle-orm';
-import { ZCreateClassInput, ZCreateClassOutput } from './onboarding.schema';
+import { and, eq } from 'drizzle-orm';
+import {
+  ZCreateClassInput,
+  ZCreateClassOutput,
+  ZJoinSectionInput,
+  ZJoinSectionOutput,
+  ZRequestSectionInput,
+} from './onboarding.schema';
 import { generateUsername } from 'unique-username-generator';
 import { TRPCError } from '@trpc/server';
 
 export const onboardingRouter = router({
+  joinSection: authedProcedure
+    .input(ZJoinSectionInput)
+    .output(ZJoinSectionOutput)
+    .mutation(async (opts) => {
+      const JoinSection = await opts.ctx.db.query.section.findFirst({
+        where: eq(section.username, opts.input.username),
+      });
+
+      if (!JoinSection) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'no classes found with this username',
+        });
+      }
+      return JoinSection;
+    }),
+  requestSection: authedProcedure
+    .input(ZRequestSectionInput)
+    .mutation(async (opts) => {
+      // check if the user has already requested
+      const alreadyRequested = await opts.ctx.db.query.sectionRequest.findFirst(
+        {
+          where: and(
+            eq(sectionRequest.userId, opts.ctx.user.id),
+            eq(sectionRequest.sectionId, opts.input.id),
+          ),
+        },
+      );
+
+      if (alreadyRequested) {
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: 'request already sent',
+        });
+      }
+      await opts.ctx.db.insert(sectionRequest).values({
+        sectionId: opts.input.id,
+        userId: opts.ctx.user.id,
+      });
+    }),
   getSection: authedProcedure.query(async (opts) => {
     try {
       const [sections] = await opts.ctx.db

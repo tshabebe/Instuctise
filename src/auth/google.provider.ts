@@ -6,7 +6,6 @@ import { eq } from 'drizzle-orm';
 import { oauthAccountTable, userTable } from '@/db/schema';
 import { generateId } from '@/lib/id';
 import { env } from '@/config/env';
-import { getBaseUrl } from '@/lib/utils';
 import {
   createSession,
   generateSessionToken,
@@ -19,7 +18,7 @@ const google =
   new Google(
     env.GOOGLE_CLIENT_ID,
     env.GOOGLE_CLIENT_SECRET,
-    `${getBaseUrl()}/login/google/callback`,
+    `https://solid-zebra-wq4jv4jpw7wf5455-3000.app.github.dev/login/google/callback`,
   );
 
 export async function createGoogleAuthorizationURL(): Promise<Response> {

@@ -18,6 +18,20 @@ export const section = pgTable('section', {
     .$onUpdate(() => new Date()),
 });
 
+export const sectionRequest = pgTable('section_request', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: varchar('user_id')
+    .references(() => userTable.id)
+    .notNull(),
+  sectionId: uuid('group_id')
+    .references(() => section.id)
+    .notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .default(sql`current_timestamp`)
+    .$onUpdate(() => new Date()),
+});
+
 export const sectionRelations = relations(section, ({ many }) => ({
   teachers: many(teacher),
   students: many(student),

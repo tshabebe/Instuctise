@@ -13,5 +13,5 @@ export function getBaseUrl() {
   if (process.env['VERCEL_URL']) {
     return `https://${process.env['VERCEL_URL']}`;
   }
-  return `https://solid-train-jjr44jgv9w4wfqwqx-3000.app.github.dev`;
+  return `https://solid-zebra-wq4jv4jpw7wf5455-3000.app.github.dev`;
 }
