@@ -1,12 +1,15 @@
 import { relations, sql } from 'drizzle-orm';
-import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { userTable } from './auth';
 import { teacher } from './teacher';
 import { student } from './student';
+import { generateId } from '@/lib/id';
 
 export const section = pgTable('section', {
-  id: uuid('id').primaryKey().defaultRandom(),
+  id: varchar('id', { length: 30 })
+    .$defaultFn(() => generateId())
+    .primaryKey(), // prefix_ + nanoid (12)
   name: varchar('name', { length: 256 }).notNull(),
   userId: varchar('user_id')
     .references(() => userTable.id)
@@ -19,11 +22,13 @@ export const section = pgTable('section', {
 });
 
 export const sectionRequest = pgTable('section_request', {
-  id: uuid('id').primaryKey().defaultRandom(),
+  id: varchar('id', { length: 30 })
+    .$defaultFn(() => generateId())
+    .primaryKey(), // prefix_ + nanoid (12)
   userId: varchar('user_id')
     .references(() => userTable.id)
     .notNull(),
-  sectionId: uuid('group_id')
+  sectionId: varchar('group_id')
     .references(() => section.id)
     .notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
@@ -38,9 +43,11 @@ export const sectionRelations = relations(section, ({ many }) => ({
 }));
 
 export const group = pgTable('group', {
-  id: uuid('id').primaryKey().defaultRandom(),
+  id: varchar('id', { length: 30 })
+    .$defaultFn(() => generateId())
+    .primaryKey(), // prefix_ + nanoid (12)
   name: varchar('name', { length: 256 }).notNull(),
-  sectionId: uuid('group_id')
+  sectionId: varchar('section_id')
     .references(() => section.id)
     .notNull(),
   userId: varchar('user_id')

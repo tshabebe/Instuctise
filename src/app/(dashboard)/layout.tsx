@@ -1,5 +1,5 @@
 import { Suspense, type ReactNode } from 'react';
-import { AppSidebar } from './sidebar';
+import { AppSidebar } from '../../features/sidebar/sidebar';
 import { Navbar } from './navbar';
 import { SidebarProvider } from '@/primitives/sidebar';
 import { ErrorBoundary } from 'react-error-boundary';

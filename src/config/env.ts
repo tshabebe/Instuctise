@@ -9,9 +9,11 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string().url(),
-    GOOGLE_CLIENT_ID: z.string().min(1).optional(),
-    GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
+    GOOGLE_CLIENT_ID: z.string().min(1),
+    GOOGLE_CLIENT_SECRET: z.string().min(1),
     GOOGLE_AUTH: z.string().min(1),
+    UPSTASH_REDIS_REST_URL: z.string().min(1),
+    UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
   },
   /*
    * Environment variables available on the client (and server).
@@ -31,5 +33,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env['GOOGLE_CLIENT_ID'],
     GOOGLE_CLIENT_SECRET: process.env['GOOGLE_CLIENT_SECRET'],
     GOOGLE_AUTH: process.env['GOOGLE_AUTH'],
+    UPSTASH_REDIS_REST_TOKEN: process.env['UPSTASH_REDIS_REST_TOKEN'],
+    UPSTASH_REDIS_REST_URL: process.env['UPSTASH_REDIS_REST_URL'],
   },
 });

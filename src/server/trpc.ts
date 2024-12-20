@@ -2,10 +2,12 @@ import { TRPCError, initTRPC } from '@trpc/server';
 import { db } from '@/db';
 import { validateSession } from '@/auth/auth';
 import superjson from 'superjson';
+import { redis } from '@/lib/redis';
 
 export const createTRPCContext = (opts: { headers: Headers }) => {
   return {
     db,
+    redis,
     ...opts,
   };
 };
