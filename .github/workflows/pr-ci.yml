@@ -71,7 +71,7 @@ jobs:
       - name: Set DATABASE_URL
         shell: bash
         run: |
-          echo "DATABASE_URL=${{ needs.create_neon_branch.outputs.db_url_with_pooler }}?sslmode=require" >> $GITHUB_ENV
+          echo "DATABASE_URL=${{ needs.create_neon_branch.outputs.db_url_with_pooler }}?sslmode=require" >> $GITHUB_ENV && cat $GITHUB_ENV
           
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
