@@ -54,9 +54,6 @@ jobs:
       || github.event.action == 'reopened')
     environment: Production
     env:
-      # Database
-      DATABASE_URL: ${{ needs.create_neon_branch.outputs.db_url_with_pooler }}
-
       # Google
       GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
@@ -70,7 +67,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
-
+          
+      - name: Set DATABASE_URL
+        shell: bash
+        run: |
+          echo "DATABASE_URL=${{ needs.create_neon_branch.outputs.db_url_with_pooler }}?sslmode=require" >> $GITHUB_ENV
+          
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
 
