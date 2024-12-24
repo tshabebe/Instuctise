@@ -1,4 +1,4 @@
-name: Preview/Main CI
+name: Create/Delete Branch for Pull Request
 
 on:
   pull_request:
@@ -25,8 +25,8 @@ jobs:
   create_neon_branch:
     name: Create Neon Branch
     outputs:
-      db_url: ${{ steps.create_neon_branch_encode.outputs.db_url }}
-      db_url_with_pooler: ${{ steps.create_neon_branch_encode.outputs.db_url_with_pooler }}
+      db_url: ${{ steps.create_neon_branch.outputs.db_url }}
+      db_url_with_pooler: ${{ steps.create_neon_branch.outputs.db_url_with_pooler }}
     needs: setup
     if: |
       github.event_name == 'pull_request' && (
@@ -42,48 +42,19 @@ jobs:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
           api_key: ${{ secrets.NEON_API_KEY }}
+      - name: Output database URL
+        run: echo "$ {{ steps.create_neon_branch.outputs.db_url }} "
 
-  ci:
-    name: CI
-    needs: [setup, create_neon_branch]
+  delete_neon_branch:
+    name: Delete Neon Branch
+    needs: setup
+    if: github.event.action == 'closed'
     runs-on: ubuntu-latest
-    environment: ${{ github.event_name == 'push' && 'Production' || 'Preview' }}
-    env:
-      # Database
-      DATABASE_URL: ${{ needs.create_neon_branch.outputs.db_url }}
-
-      # Google
-      GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-      GOOGLE_AUTH: ${{ secrets.GOOGLE_AUTH }}
-
-      # Upstash
-      UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
-      UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Delete Neon Branch
+        id: delete_neon_branch
+        uses: neondatabase/delete-branch-action@v5
         with:
-          fetch-depth: 2
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
-
-      - name: Install Dependencies
-        run: bun install
-
-      - name: Run DB Migrations
-        run: bun db:migrate
-
-      - name: Check Format
-        run: bun format:check
-
-      - name: Lint
-        run: bun lint
-
-      - name: Typecheck
-        run: bun typecheck
-
-      - name: Build
-        run: bun run build
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+          api_key: ${{ secrets.NEON_API_KEY }}
