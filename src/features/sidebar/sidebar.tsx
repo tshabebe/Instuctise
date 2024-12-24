@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
 } from '@/primitives/dropdown-menu';
 import { Plus } from 'lucide-react';
+import type { StaticImageData } from 'next/image';
 import Image from 'next/image';
 import Logo from '@/app/icon.png';
 import { Icon } from '@/primitives/icon';
@@ -19,7 +20,12 @@ export function AppSidebar() {
       <div>another hello </div>
       <DropdownMenu>
         <div className="flex">
-          <Image src={Logo} width={32} height={32} alt="Instructise logo" />
+          <Image
+            src={Logo as StaticImageData}
+            width={32}
+            height={32}
+            alt="Instructise logo"
+          />
           {/* </div> */}
           <div className="flex flex-col gap-0.5 leading-none">
             <span className="font-semibold">Instructise</span>
