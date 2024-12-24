@@ -1,0 +1,42 @@
+name: Main CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  main-ci:
+    runs-on: ubuntu-latest
+
+    environment: Production
+    env:
+      # Database
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Run DB Migrations
+        run: bun db:migrate
+
+      - name: Check Format
+        run: bun format:check
+
+      - name: Lint
+        run: bun lint
+
+      - name: Typecheck
+        run: bun typecheck
+
+      - name: Build
+        run: bun run build
