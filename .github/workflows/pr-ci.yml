@@ -42,5 +42,7 @@ jobs:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
           api_key: ${{ secrets.NEON_API_KEY }}
-      - name: Output database URL
-        run: echo "${{steps.create_neon_branch.outputs.db_url}}"
+      - name: Set DATABASE_URL
+        shell: bash
+        run: |
+          echo "DATABASE_URL=${{steps.create-branch.outputs.db_url}}?sslmode=require" >> $GITHUB_ENV && cat $GITHUB_ENV
