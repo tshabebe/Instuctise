@@ -18,7 +18,7 @@ const google =
   new Google(
     env.GOOGLE_CLIENT_ID,
     env.GOOGLE_CLIENT_SECRET,
-    `https://solid-zebra-wq4jv4jpw7wf5455-3000.app.github.dev/login/google/callback`,
+    `https://scaling-guide-jpgwrgw6547c55vx-3000.app.github.dev/login/google/callback`,
   );
 
 export async function createGoogleAuthorizationURL(): Promise<Response> {
