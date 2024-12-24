@@ -45,4 +45,4 @@ jobs:
       - name: Set DATABASE_URL
         shell: bash
         run: |
-          echo "DATABASE_URL=${{steps.create-branch.outputs.db_url}}?sslmode=require" >> $GITHUB_ENV && cat $GITHUB_ENV
+          echo "DATABASE_URL=${{steps.create_neon_branch.outputs.db_url}}?sslmode=require" >> $GITHUB_ENV && cat $GITHUB_ENV
