@@ -42,6 +42,11 @@ jobs:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
           api_key: ${{ secrets.NEON_API_KEY }}
+          
+      - name: Set DATABASE_URL
+        shell: bash
+        run: |
+          echo "DATABASE_URL=${{ needs.create_neon_branch.outputs.db_url_with_pooler }}?sslmode=require" >> $GITHUB_ENV && cat $GITHUB_ENV
 
   main-ci:
     name: Main CI
