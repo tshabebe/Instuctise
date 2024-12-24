@@ -5,6 +5,7 @@ ignorePaths:
   - bun.lockb
   - .tsbuildinfo
   - .gitignore
+  - .github
   - .next
   - drizzle
   - '**/*.svg'
