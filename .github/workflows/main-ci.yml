@@ -14,6 +14,15 @@ jobs:
       # Database
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      # Google
+      GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      GOOGLE_AUTH: ${{ secrets.GOOGLE_AUTH }}
+
+      # Upstash
+      UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+      UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
