@@ -1,7 +1,5 @@
 import { Suspense, type ReactNode } from 'react';
-import { AppSidebar } from './sidebar';
-import { Navbar } from './navbar';
-import { SidebarProvider } from '@/primitives/sidebar';
+import { AppSidebar } from '../../features/sidebar/sidebar';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HydrateClient, trpc } from '@/lib/trpc/rsc.client';
 import { checkIsOnboarding, checkLoggedIn } from '@/auth/auth';
@@ -32,13 +30,8 @@ async function DashboardLayout({ children }: { children: ReactNode }) {
       <HydrateClient>
         <ErrorBoundary fallback="something went wrong">
           <Suspense fallback="loading...">
-            <SidebarProvider>
-              <AppSidebar />
-              <div className="flex grow flex-col">
-                <Navbar />
-                {children}
-              </div>
-            </SidebarProvider>
+            <AppSidebar />
+            <div className="flex grow flex-col">{children}</div>
           </Suspense>
         </ErrorBoundary>
       </HydrateClient>

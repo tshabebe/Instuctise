@@ -1,0 +1,8 @@
+.prettierignore
+node_modules
+.next
+next-env.d.ts
+.husky
+bun.lockb
+*.toml
+drizzle
