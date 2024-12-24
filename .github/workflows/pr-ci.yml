@@ -1,68 +1,18 @@
-name: PR CI
+name: Create Neon Branch
 
-on: [pull_request]
+on:
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
-  main-ci:
+  create-branch:
     runs-on: ubuntu-latest
-
-    environment: Production
-    env:
-      # Neon
-      NEON_DATABASE_USERNAME: ${{ secrets.NEON_DATABASE_USERNAME }}
-      NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
-      NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }}
-
-      # Google
-      GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-      GOOGLE_AUTH: ${{ secrets.GOOGLE_AUTH }}
-
-      # Upstash
-      UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
-      UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Get branch name
-        id: branch_name
-        uses: tj-actions/branch-names@v8
-
-      - name: Create Neon Branch
-        id: create-branch
-        uses: neondatabase/create-branch-action@v4
-        with:
-          project_id: ${{ env.NEON_PROJECT_ID }}
-          branch_name: pr-${{ github.event.number }}-${{ steps.branch_name.outputs.current_branch }}
-          username: ${{ env.NEON_DATABASE_USERNAME }}
-          api_key: ${{ env.NEON_API_KEY }}
-
-      - name: Set DATABASE_URL
-        shell: bash
-        run: |
-          echo "DATABASE_URL=${{ steps.create-branch.outputs.db_url }}?sslmode=require" >> $GITHUB_ENV
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
-
-      - name: Install Dependencies
-        run: bun install
-
-      - name: Run DB Migrations
-        run: bun db:migrate
-
-      - name: Check Format
-        run: bun format:check
-
-      - name: Lint
-        run: bun lint
-
-      - name: Typecheck
-        run: bun typecheck
-
-      - name: Build
-        run: bun run build
+    - name: Create Neon Branch
+      run: |
+        curl -X POST https://console.neon.tech/api/v1/projects/<project-id>/branches \
+        -H "Authorization: Bearer ${{ secrets.NEON_API_KEY }}" \
+        -d '{"name": "${{ github.head_ref }}"}'
