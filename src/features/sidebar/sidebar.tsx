@@ -8,8 +8,8 @@ import {
   DropdownMenuSeparator,
 } from '@/primitives/dropdown-menu';
 import { Plus } from 'lucide-react';
-import Image from 'next/image';
-import Logo from '@/app/icon.png';
+// import Image from 'next/image';
+// import Logo from '@/app/icon.png';
 import { Icon } from '@/primitives/icon';
 
 export function AppSidebar() {
@@ -19,12 +19,11 @@ export function AppSidebar() {
       <div>another hello </div>
       <DropdownMenu>
         <div className="flex">
-          <Image src={Logo} width={32} height={32} alt="Instructise logo" />
-          {/* </div> */}
+          {/* <Image src={Logo} width={32} height={32} alt="Instructise logo" />
           <div className="flex flex-col gap-0.5 leading-none">
             <span className="font-semibold">Instructise</span>
             <span className="text-xs">student</span>
-          </div>
+          </div> */}
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className={'ml-auto size-7'}>
               <Icon name="ChevronsUpDown" />
