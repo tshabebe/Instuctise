@@ -46,7 +46,7 @@ jobs:
       - name: Set DATABASE_URL
         shell: bash
         run: |
-          echo "DATABASE_URL=${{ needs.create_neon_branch.outputs.db_url_with_pooler }}?sslmode=require" >> $GITHUB_ENV && cat $GITHUB_ENV
+          echo "DATABASE_URL=${{ steps.create_neon_branch_encode.outputs.db_url }}?sslmode=require" >> $GITHUB_ENV && cat $GITHUB_ENV
 
   main-ci:
     name: Main CI
