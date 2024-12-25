@@ -14,11 +14,6 @@ concurrency:
 jobs:
   create_neon_branch:
     name: Create Neon Branch
-    if: |
-      github.event_name == 'pull_request' && (
-      github.event.action == 'synchronize'
-      || github.event.action == 'opened'
-      || github.event.action == 'reopened')
     runs-on: ubuntu-latest
     environment: Production
     env:
