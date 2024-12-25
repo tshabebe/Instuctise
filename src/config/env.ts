@@ -1,13 +1,21 @@
 // src/env.mjs
 import { createEnv } from '@t3-oss/env-nextjs';
+import { vercel } from '@t3-oss/env-nextjs/presets';
 import { z } from 'zod';
 
 export const env = createEnv({
+  extends: [vercel()],
+  shared: {
+    NODE_ENV: z
+      .enum(['development', 'production', 'test'])
+      .default('development'),
+  },
   /*
    * Serverside Environment variables, not available on the client.
    * Will throw if you access these variables on the client.
    */
   server: {
+    PORT: z.coerce.number().default(3000),
     DATABASE_URL: z.string().url(),
     GOOGLE_CLIENT_ID: z.string().min(1).optional(),
     GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
@@ -35,5 +43,7 @@ export const env = createEnv({
     GOOGLE_AUTH: process.env['GOOGLE_AUTH'],
     UPSTASH_REDIS_REST_TOKEN: process.env['UPSTASH_REDIS_REST_TOKEN'],
     UPSTASH_REDIS_REST_URL: process.env['UPSTASH_REDIS_REST_URL'],
+    NODE_ENV: process.env['NODE_ENV'],
+    PORT: process.env['PORT'],
   },
 });

@@ -1,17 +1,23 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { env } from '@/config/env';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/**
+ * A utility function to get the base URL of the current instance.
+ * @returns The base URL.
+ */
 export function getBaseUrl() {
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
 
-  if (process.env['VERCEL_URL']) {
-    return `https://${process.env['VERCEL_URL']}`;
+  if (env.VERCEL_URL) {
+    return `https://${env.VERCEL_URL}`;
   }
-  return `https://solid-zebra-wq4jv4jpw7wf5455-3000.app.github.dev`;
+
+  return `http://localhost:${String(env.PORT)}`;
 }

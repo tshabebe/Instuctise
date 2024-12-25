@@ -11,6 +11,7 @@ import {
   generateSessionToken,
   setSessionTokenCookie,
 } from './lucia';
+import { getBaseUrl } from '@/lib/utils';
 
 const google =
   env.GOOGLE_CLIENT_ID !== undefined &&
@@ -18,7 +19,7 @@ const google =
   new Google(
     env.GOOGLE_CLIENT_ID,
     env.GOOGLE_CLIENT_SECRET,
-    `https://scaling-guide-jpgwrgw6547c55vx-3000.app.github.dev/login/google/callback`,
+    `${getBaseUrl()}/login/google/callback`,
   );
 
 export async function createGoogleAuthorizationURL(): Promise<Response> {
