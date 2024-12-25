@@ -2,74 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --gray-1: 0 0% 99%;
-  --gray-2: 0 0% 98%;
-  --gray-3: 0 0% 94%;
-  --gray-4: 0 0% 91%;
-  --gray-5: 0 0% 88%;
-  --gray-6: 0 0% 85%;
-  --gray-7: 0 0% 81%;
-  --gray-8: 0 0% 73%;
-  --gray-9: 0 0% 55%;
-  --gray-10: 0 0% 51%;
-  --gray-11: 0 0% 39%;
-  --gray-12: 0 0% 13%;
+@layer base {
+  :root {
+    --gray-1: 0 0% 99%;
+    --gray-2: 0 0% 98%;
+    --gray-3: 0 0% 94%;
+    --gray-4: 0 0% 91%;
+    --gray-5: 0 0% 88%;
+    --gray-6: 0 0% 85%;
+    --gray-7: 0 0% 81%;
+    --gray-8: 0 0% 73%;
+    --gray-9: 0 0% 55%;
+    --gray-10: 0 0% 51%;
+    --gray-11: 0 0% 39%;
+    --gray-12: 0 0% 13%;
 
-  --orange-1: 340 100% 99%;
-  --orange-2: 351 78% 98%;
-  --orange-3: 346 100% 96%;
-  --orange-4: 346 100% 93%;
-  --orange-5: 347 85% 90%;
-  --orange-6: 345 71% 85%;
-  --orange-7: 345 61% 80%;
-  --orange-8: 345 57% 73%;
-  --orange-9: 339 99% 66%;
-  --orange-10: 338 85% 61%;
-  --orange-11: 335 71% 46%;
-  --orange-12: 338 62% 24%;
+    --orange-1: 340 100% 99%;
+    --orange-2: 351 78% 98%;
+    --orange-3: 346 100% 96%;
+    --orange-4: 346 100% 93%;
+    --orange-5: 347 85% 90%;
+    --orange-6: 345 71% 85%;
+    --orange-7: 345 61% 80%;
+    --orange-8: 345 57% 73%;
+    --orange-9: 339 99% 66%;
+    --orange-10: 338 85% 61%;
+    --orange-11: 335 71% 46%;
+    --orange-12: 338 62% 24%;
 
-  --salmon-1: 0 50% 99%;
-  --salmon-2: 7 100% 98%;
-  --salmon-3: 5 100% 96%;
-  --salmon-4: 6 100% 92%;
-  --salmon-5: 5 100% 88%;
-  --salmon-6: 4 100% 86%;
-  --salmon-7: 4 79% 80%;
-  --salmon-8: 3 70% 73%;
-  --salmon-9: 1 91% 69%;
-  --salmon-10: 0 79% 65%;
-  --salmon-11: 359 57% 53%;
-  --salmon-12: 3 36% 25%;
+    --salmon-1: 0 50% 99%;
+    --salmon-2: 7 100% 98%;
+    --salmon-3: 5 100% 96%;
+    --salmon-4: 6 100% 92%;
+    --salmon-5: 5 100% 88%;
+    --salmon-6: 4 100% 86%;
+    --salmon-7: 4 79% 80%;
+    --salmon-8: 3 70% 73%;
+    --salmon-9: 1 91% 69%;
+    --salmon-10: 0 79% 65%;
+    --salmon-11: 359 57% 53%;
+    --salmon-12: 3 36% 25%;
 
-  --indigo-1: 240 33% 99%;
-  --indigo-2: 225 100% 98%;
-  --indigo-3: 222 89% 96%;
-  --indigo-4: 224 100% 94%;
-  --indigo-5: 224 100% 91%;
-  --indigo-6: 225 100% 88%;
-  --indigo-7: 226 87% 82%;
-  --indigo-8: 226 75% 75%;
-  --indigo-9: 226 70% 55%;
-  --indigo-10: 226 65% 52%;
-  --indigo-11: 226 56% 50%;
-  --indigo-12: 226 50% 24%;
+    --red-1: 0 100% 99%;
+    --red-2: 7, 100%, 98%;
+    --red-3: 10, 92%, 95%;
+    --red-4: 12, 100%, 91%;
+    --red-5: 11, 100%, 88%;
+    --red-6: 11, 95%, 84%;
+    --red-7: 10, 82%, 78%;
+    --red-8: 10, 75%, 70%;
+    --red-9: 10, 78%, 54%;
+    --red-10: 10, 73%, 51%;
+    --red-11: 10, 82%, 45%;
+    --red-12: 8, 50%, 24%;
+  }
 
-  --red-1: 0 100% 99%;
-  --red-2: 7, 100%, 98%;
-  --red-3: 10, 92%, 95%;
-  --red-4: 12, 100%, 91%;
-  --red-5: 11, 100%, 88%;
-  --red-6: 11, 95%, 84%;
-  --red-7: 10, 82%, 78%;
-  --red-8: 10, 75%, 70%;
-  --red-9: 10, 78%, 54%;
-  --red-10: 10, 73%, 51%;
-  --red-11: 10, 82%, 45%;
-  --red-12: 8, 50%, 24%;
-}
-
-@media (prefers-color-scheme: dark) {
   .dark {
     --gray-1: 20 14% 5.1%;
     --gray-2: 20 14% 6%;
@@ -110,19 +97,6 @@
     --salmon-11: 3 100% 77%;
     --salmon-12: 4 100% 91%;
 
-    --indigo-1: 231 29% 9%;
-    --indigo-2: 230 31% 11%;
-    --indigo-3: 225 51% 19%;
-    --indigo-4: 225 54% 25%;
-    --indigo-5: 225 52% 30%;
-    --indigo-6: 226 47% 35%;
-    --indigo-7: 226 44% 41%;
-    --indigo-8: 226 45% 48%;
-    --indigo-9: 200 85% 50%;
-    --indigo-10: 228 73% 61%;
-    --indigo-11: 228 100% 81%;
-    --indigo-12: 224 100% 92%;
-
     --red-1: 0, 17%, 8%;
     --red-2: 10, 24%, 10%;
     --red-3: 5, 48%, 15%;
@@ -138,15 +112,18 @@
   }
 }
 
-body {
-  color: hsl(var(--gray-11));
-  background: hsl(var(--gray-1));
-  font-family: Arial, Helvetica, sans-serif;
-  border-color: hsl(var(--gray-6));
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-gray-subtle-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: Arial, Helvetica, sans-serif;
   }
 }

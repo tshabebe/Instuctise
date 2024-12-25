@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss';
 import tailwindAnimate from 'tailwindcss-animate';
-type Scale = 'gray' | 'orange' | 'salmon' | 'indigo' | 'red';
+type Scale = 'gray' | 'orange' | 'salmon' | 'red';
 
 const generateColorScale = (scale: Scale) => ({
   DEFAULT: `hsl(var(--${scale}-9))`,
@@ -39,21 +39,10 @@ const config: Config = {
         background: 'hsl(var(--gray-1))',
         foreground: 'hsl(var(--gray-12))',
         'foreground-muted': 'hsl(var(--gray-11))',
-        border: generateColorScale('gray'),
-        'sidebar-background': 'hsl(var(--gray-1))',
-        'sidebar-foreground': generateColorScale('gray').solid,
-        'sidebar-primary': generateColorScale('orange').DEFAULT,
-        'sidebar-border': generateColorScale('gray')['subtle-border'],
-        'sidebar-accent': generateColorScale('gray').subtle,
-        'sidebar-accent-foreground':
-          generateColorScale('gray')['foreground-muted'],
-        'sidebar-ring': generateColorScale('orange').DEFAULT,
-        'sidebar-primary-foreground': generateColorScale('orange').foreground,
 
         gray: generateColorScale('gray'),
         orange: generateColorScale('orange'),
         salmon: generateColorScale('salmon'),
-        indigo: generateColorScale('indigo'),
         red: generateColorScale('red'),
       },
     },
