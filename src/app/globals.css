@@ -123,7 +123,7 @@
     @apply border-gray-subtle-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground-muted;
     font-family: Arial, Helvetica, sans-serif;
   }
 }

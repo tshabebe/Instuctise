@@ -21,22 +21,5 @@ export const paths = {
     dashboard: {
       getHref: () => '/home',
     },
-    class: {
-      getHref: () => '/class',
-    },
-    discussion: {
-      getHref: (id: string) => `/app/discussions/${id}`,
-    },
-    users: {
-      getHref: () => '/app/users',
-    },
-    profile: {
-      getHref: () => '/app/profile',
-    },
-  },
-  public: {
-    discussion: {
-      getHref: (id: string) => `/public/discussions/${id}`,
-    },
   },
 } as const;
