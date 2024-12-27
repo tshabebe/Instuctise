@@ -30,11 +30,13 @@ export default function JoinInput() {
     <div className="flex flex-col gap-2">
       <CreateClassOnboarding onSearchResult={setSearchResult} />
       {searchResult && (
-        <div className="flex justify-center gap-4 rounded-lg bg-gray-subtle p-2 text-sm font-medium">
+        <div className="flex justify-center gap-4 rounded-lg bg-gray-elevation-1 p-2 text-sm font-medium">
           <span>{searchResult.name}</span>
-          <span className="text-gray-solid">{'@' + searchResult.username}</span>
+          <span className="text-gray-text-tertiary">
+            {'@' + searchResult.username}
+          </span>
           <button
-            className="text-orange-foreground-muted"
+            className="text-orange-text-primary"
             onClick={() => {
               requestSection.mutate(searchResult);
             }}
@@ -47,7 +49,7 @@ export default function JoinInput() {
         </div>
       )}
       {requestSection.isError && (
-        <p className="text-[0.8rem] font-medium text-red-solid">
+        <p className="text-[0.8rem] font-medium text-red-text-tertiary">
           <Icon name="CircleX" className="mr-1.5 inline-block size-4" />
           {requestSection.error.message}
         </p>

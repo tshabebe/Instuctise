@@ -36,17 +36,17 @@ export function Onboarding() {
         </div>
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-subtle-border" />
+            <span className="w-full border-t border-gray-elevation-2-border" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-gray-solid">
+            <span className="bg-background px-2 text-gray-text-tertiary">
               Or continue TO
             </span>
           </div>
         </div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant={'subtlePrimary'} className="rounded-md py-2">
+            <Button variant={'search'} className="rounded-md py-2">
               Create class
             </Button>
           </DialogTrigger>
@@ -77,7 +77,9 @@ function CreateClassOnboarding() {
   const createClass = trpc.onboardingRouter.createClass.useMutation({
     onSuccess: () => {
       router.replace(
-        redirectTo ? decodeURIComponent(redirectTo) : paths.app.class.getHref(),
+        redirectTo
+          ? decodeURIComponent(redirectTo)
+          : paths.app.dashboard.getHref(),
       );
     },
   });
@@ -135,9 +137,7 @@ function CreateClassOnboarding() {
                       <Button
                         type="button"
                         variant={
-                          selectedUsername === username
-                            ? 'ghostSelected'
-                            : 'ghost'
+                          selectedUsername === username ? 'default' : 'search'
                         }
                         size={'sm'}
                         onClick={() => {

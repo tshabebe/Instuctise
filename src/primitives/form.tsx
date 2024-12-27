@@ -93,7 +93,7 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-red-solid', className)}
+      className={cn(error && 'text-red-text-tertiary', className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -132,7 +132,7 @@ const FormDescription = React.forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn('text-[0.8rem] text-foreground-muted', className)}
+      className={cn('text-[0.8rem] text-gray-text-secondary', className)}
       {...props}
     />
   );
@@ -154,7 +154,10 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('text-[0.8rem] font-medium text-red-solid', className)}
+      className={cn(
+        'text-[0.8rem] font-medium text-red-text-secondary',
+        className,
+      )}
       {...props}
     >
       <CircleXIcon className="mr-1.5 inline-block size-4" />

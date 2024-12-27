@@ -8,7 +8,7 @@ function Skeleton({
   return (
     <div
       className={cn(
-        'animate-pulse rounded-md bg-gray-element',
+        'animate-pulse rounded-md bg-gray-elevation-1',
         noPulse && 'animate-none',
         className,
       )}
