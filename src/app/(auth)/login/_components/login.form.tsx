@@ -15,11 +15,11 @@ export function LoginForm() {
 
 function Greeting() {
   return (
-    <div className="flex flex-col">
-      <h1 className="text-4xl font-bold leading-tight">
+    <div className="flex flex-col items-center">
+      <h1 className="text-4xl font-extrabold leading-tight">
         Login to your account
       </h1>
-      <p>tip: change the default username</p>
+      <p className="">tip: change the default username</p>
     </div>
   );
 }
