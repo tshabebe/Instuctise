@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import tailwindAnimate from 'tailwindcss-animate';
+import reactAriaComponents from 'tailwindcss-react-aria-components';
 type Scale = 'gray' | 'orange' | 'green' | 'red';
 
 const generateColorScale = (scale: Scale) => ({
@@ -63,6 +64,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [tailwindAnimate],
+  plugins: [tailwindAnimate, reactAriaComponents],
 };
 export default config;
