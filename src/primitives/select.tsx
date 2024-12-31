@@ -1,17 +1,21 @@
 'use client';
+import { cn } from '@/lib/utils';
+import type { SelectProps } from 'react-aria-components';
 import {
+  Select,
+  SelectValue,
+  Popover,
   ListBox,
   ListBoxItem,
-  Popover,
-  Select as SelectAria,
-  SelectValue,
 } from 'react-aria-components';
-import { Icon } from './icon';
 import { Button } from './button';
+import { Icon } from './icon';
 
-export function Select() {
+const userRoles = [{ name: 'Teacher' }, { name: 'Student' }];
+
+export function UserRole({ ...props }: SelectProps) {
   return (
-    <SelectAria aria-describedby="user role">
+    <Select aria-labelledby="user role" {...props}>
       <Button
         variant={'search'}
         size={'sm'}
@@ -24,12 +28,31 @@ export function Select() {
           <Icon name="ChevronDown" />
         </span>
       </Button>
-      <Popover>
-        <ListBox className={'bg-gray-elevation-4'}>
-          <ListBoxItem>Student</ListBoxItem>
-          <ListBoxItem>Teacher</ListBoxItem>
+      <Popover className={'w-[--trigger-width]'}>
+        <ListBox
+          className={
+            'rounded-md border border-gray-elevation-3-border bg-gray-elevation-2'
+          }
+          items={userRoles}
+        >
+          {(role) => {
+            return (
+              <ListBoxItem
+                id={role.name}
+                className={({ isSelected, isFocused }) =>
+                  cn(
+                    'cursor-pointer p-2 outline-none',
+                    isFocused && 'bg-gray-elevation-2-hover',
+                    isSelected && 'bg-gray-elevation-4',
+                  )
+                }
+              >
+                {role.name}
+              </ListBoxItem>
+            );
+          }}
         </ListBox>
       </Popover>
-    </SelectAria>
+    </Select>
   );
 }

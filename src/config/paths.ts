@@ -5,12 +5,13 @@ export const paths = {
 
   auth: {
     register: {
-      getHref: (redirectTo?: string | null) =>
-        `/auth/register${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+      getHref: () => '/auth/login',
     },
     login: {
-      getHref: (redirectTo?: string | null) =>
-        `/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+      getHref: (userRole: string) => `/auth/login?userRole=${userRole}`,
+    },
+    callback: {
+      getHref: () => '/auth/login/callback',
     },
   },
 

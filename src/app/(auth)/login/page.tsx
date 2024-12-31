@@ -4,7 +4,7 @@ import { checkLoggedIn } from '@/auth/auth';
 import { env } from '@/config/env';
 import type { Metadata } from 'next';
 import { paths } from '@/config/paths';
-import { LoginForm } from './_components/login.form';
+import { LoginPageUI } from './_components/login.form';
 
 const googleAuthIsEnabled =
   env.GOOGLE_CLIENT_ID !== undefined && env.GOOGLE_CLIENT_SECRET !== undefined;
@@ -28,7 +28,7 @@ export default async function LoginPage() {
 
   return (
     <main className="container mx-auto flex h-dvh flex-col items-center justify-center">
-      {googleAuthIsEnabled && <LoginForm />}
+      {googleAuthIsEnabled && <LoginPageUI />}
 
       {!googleAuthIsEnabled && (
         <p>Authentication environment variables are not configured.</p>
