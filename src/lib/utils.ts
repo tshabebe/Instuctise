@@ -15,6 +15,10 @@ export function getBaseUrl() {
     return window.location.origin;
   }
 
+  if (env.VERCEL_PROJECT_PRODUCTION_URL && env.VERCEL_ENV === 'production') {
+    return `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+
   if (env.VERCEL_URL) {
     return `https://${env.VERCEL_URL}`;
   }
