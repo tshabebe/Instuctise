@@ -8,10 +8,10 @@ export const paths = {
       getHref: () => '/auth/login',
     },
     login: {
-      getHref: (userRole: string) => `/auth/login?userRole=${userRole}`,
+      getHref: (userRole: string) => `/login/google?userRole=${userRole}`,
     },
     callback: {
-      getHref: () => '/auth/login/callback',
+      getHref: () => '/login/google/callback',
     },
   },
 

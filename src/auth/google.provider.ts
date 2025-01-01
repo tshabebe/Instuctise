@@ -3,6 +3,7 @@ import { generateState, Google, OAuth2RequestError } from 'arctic';
 import { z } from 'zod';
 import { db } from '@/db';
 import { eq } from 'drizzle-orm';
+import type { User } from '@/db/schema';
 import { oauthAccountTable, userTable } from '@/db/schema';
 import { generateId } from '@/lib/id';
 import { env } from '@/config/env';
@@ -12,6 +13,7 @@ import {
   setSessionTokenCookie,
 } from './lucia';
 import { getBaseUrl } from '@/lib/utils';
+import { paths } from '@/config/paths';
 
 const google =
   env.GOOGLE_CLIENT_ID !== undefined &&
@@ -19,10 +21,13 @@ const google =
   new Google(
     env.GOOGLE_CLIENT_ID,
     env.GOOGLE_CLIENT_SECRET,
-    `${getBaseUrl()}/login/google/callback`,
+    `${getBaseUrl()}${paths.auth.callback.getHref()}`,
   );
 
-export async function createGoogleAuthorizationURL(): Promise<Response> {
+const USER_ROLE_COOKIE_NAME = 'user_role';
+export async function createGoogleAuthorizationURL(
+  request: Request,
+): Promise<Response> {
   if (!google) {
     return new Response(null, {
       status: 404,
@@ -31,9 +36,20 @@ export async function createGoogleAuthorizationURL(): Promise<Response> {
   }
 
   const state = generateState();
-  const url = await google.createAuthorizationURL(state, env.GOOGLE_AUTH, {
-    scopes: ['profile', 'email'],
-  });
+  const googleRedirectUrl = await google.createAuthorizationURL(
+    state,
+    env.GOOGLE_AUTH,
+    {
+      scopes: ['profile', 'email'],
+    },
+  );
+
+  const userRoleRequestUrl = new URL(request.url);
+  const userRole = userRoleRequestUrl.searchParams.get('userRole');
+
+  if (userRole === null) {
+    throw new Error('user role is required');
+  }
 
   (await cookies()).set('google_oauth_state', state, {
     path: '/',
@@ -43,7 +59,9 @@ export async function createGoogleAuthorizationURL(): Promise<Response> {
     sameSite: 'lax',
   });
 
-  return Response.redirect(url);
+  (await cookies()).set(USER_ROLE_COOKIE_NAME, userRole);
+
+  return Response.redirect(googleRedirectUrl);
 }
 
 const googleUser = z.object({
@@ -69,6 +87,7 @@ export async function validateGoogleCallback(
   const url = new URL(request.url);
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');
+  const userRole = (await cookies()).get(USER_ROLE_COOKIE_NAME)?.value;
   const storedState =
     (await cookies()).get('google_oauth_state')?.value ?? null;
   if (!code || !state || !storedState || state !== storedState) {
@@ -122,6 +141,7 @@ export async function validateGoogleCallback(
       id: userId,
       email,
       name,
+      userRole: userRole as User['userRole'],
       avatarUrl: picture,
     });
     await db.insert(oauthAccountTable).values({

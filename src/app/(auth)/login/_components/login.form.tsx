@@ -35,7 +35,10 @@ function LoginForm() {
     <div className="flex flex-col items-end gap-2">
       <UserRole selectedKey={userRole} onSelectionChange={setUserRole} />
       <Button variant={'search'} className={'w-56'}>
-        <Link href={paths.auth.login.getHref(userRole as string)}>
+        <Link
+          href={paths.auth.login.getHref(userRole as string)}
+          className="flex gap-2 items-center"
+        >
           <GoogleIcon /> Login with Google
         </Link>
       </Button>
