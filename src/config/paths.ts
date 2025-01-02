@@ -5,12 +5,13 @@ export const paths = {
 
   auth: {
     register: {
-      getHref: (redirectTo?: string | null) =>
-        `/auth/register${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+      getHref: () => '/auth/login',
     },
     login: {
-      getHref: (redirectTo?: string | null) =>
-        `/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+      getHref: (userRole: string) => `/login/google?userRole=${userRole}`,
+    },
+    callback: {
+      getHref: () => '/login/google/callback',
     },
   },
 
@@ -20,23 +21,6 @@ export const paths = {
     },
     dashboard: {
       getHref: () => '/home',
-    },
-    class: {
-      getHref: () => '/class',
-    },
-    discussion: {
-      getHref: (id: string) => `/app/discussions/${id}`,
-    },
-    users: {
-      getHref: () => '/app/users',
-    },
-    profile: {
-      getHref: () => '/app/profile',
-    },
-  },
-  public: {
-    discussion: {
-      getHref: (id: string) => `/public/discussions/${id}`,
     },
   },
 } as const;
