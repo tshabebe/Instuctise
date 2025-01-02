@@ -17,7 +17,7 @@ async function DashboardLayout({ children }: { children: ReactNode }) {
   const IsOnboardingFinished = await checkIsOnboarding();
 
   if (!isLoggedIn) {
-    redirect(paths.auth.login.getHref());
+    redirect(paths.auth.register.getHref());
   }
 
   if (!IsOnboardingFinished) {
