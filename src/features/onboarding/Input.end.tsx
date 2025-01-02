@@ -1,16 +1,6 @@
 'use client';
 
 import { trpc } from '@/lib/trpc/client';
-import { Button } from '@/primitives/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/primitives/form';
-import { Input } from '@/primitives/input';
 import type {
   JoinSectionInput,
   JoinSectionOutput,
@@ -19,8 +9,15 @@ import { ZJoinSectionInput } from '@/server/router/onboarding.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Dispatch, SetStateAction } from 'react';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Icon } from '@/primitives/icon';
+import {
+  Button,
+  FieldError,
+  Input,
+  Label,
+  TextField,
+} from 'react-aria-components';
 
 export default function JoinInput() {
   const [searchResult, setSearchResult] = useState<JoinSectionOutput>();
@@ -83,43 +80,42 @@ function CreateClassOnboarding({
   });
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((data) => {
-          createClass.mutate(data);
-        })}
-      >
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Join</FormLabel>
-              <FormControl>
-                <div className="flex">
-                  <Input
-                    className="-me-px flex-1 rounded-e-none shadow-none focus-visible:z-10"
-                    placeholder="@classname"
-                    {...field}
-                  />
-                  <Button
-                    type="submit"
-                    variant={'search'}
-                    isLoading={createClass.isPending}
-                    disabled={createClass.isPending}
-                    // TODO add more variants to button that works
-                    className="rounded-none rounded-e-lg py-1"
-                  >
-                    {!createClass.isPending && <Icon name="Search" size={16} />}
-                    <span>Search</span>
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </form>
-    </Form>
+    <form
+      onSubmit={form.handleSubmit((data) => {
+        createClass.mutate(data);
+      })}
+    >
+      <Controller
+        control={form.control}
+        name="username"
+        render={({
+          field: { ref, ...field },
+          fieldState: { error, invalid },
+        }) => (
+          <TextField {...field} isInvalid={invalid}>
+            <Label>Name</Label>
+            <div className="flex">
+              <Input
+                className="-me-px flex-1 rounded-l-md border bg-gray-elevation-2 px-3 py-1 placeholder:text-gray-text-tertiary focus-visible:z-10"
+                placeholder="@classname"
+                ref={ref}
+              />
+              <Button
+                type="submit"
+                isPending={createClass.isPending}
+                isDisabled={createClass.isPending}
+                className="flex items-center justify-center gap-2 rounded-r-lg border border-gray-elevation-2-border bg-gray-elevation-2 px-2 py-1 hover:bg-gray-elevation-3"
+              >
+                {!createClass.isPending && <Icon name="Search" size={16} />}
+                <span>Search</span>
+              </Button>
+            </div>
+            <FieldError className={'text-red-text-secondary'}>
+              {error?.message}
+            </FieldError>
+          </TextField>
+        )}
+      />
+    </form>
   );
 }

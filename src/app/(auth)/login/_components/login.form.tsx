@@ -1,6 +1,5 @@
 'use client';
 import GoogleIcon from './google.icon';
-import { Button } from '@/primitives/button';
 import type { Key } from 'react-aria-components';
 import { useState } from 'react';
 import { UserRole } from '@/primitives/select';
@@ -34,14 +33,14 @@ function LoginForm() {
   return (
     <div className="flex flex-col items-end gap-2">
       <UserRole selectedKey={userRole} onSelectionChange={setUserRole} />
-      <Button variant={'search'} className={'w-56'}>
+      <button className={'w-56'}>
         <Link
           href={paths.auth.login.getHref(userRole as string)}
-          className="flex gap-2 items-center"
+          className="flex items-center gap-2"
         >
           <GoogleIcon /> Login with Google
         </Link>
-      </Button>
+      </button>
     </div>
   );
 }

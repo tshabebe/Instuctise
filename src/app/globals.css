@@ -126,4 +126,10 @@
     @apply bg-background text-foreground text-sm font-medium;
     font-family: Arial, Helvetica, sans-serif;
   }
+  button {
+    @apply outline-none;
+  }
+  input {
+    @apply outline-none;
+  }
 }

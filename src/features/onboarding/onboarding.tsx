@@ -1,32 +1,33 @@
 'use client';
-import { Button } from '@/primitives/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/primitives/dialog';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/primitives/form';
-import { Input } from '@/primitives/input';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { CreateClassInput } from '@/server/router/onboarding.schema';
 import { ZCreateClassInput } from '@/server/router/onboarding.schema';
 import { trpc } from '@/lib/trpc/client';
-import { Skeleton } from '@/primitives/skeleton';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { paths } from '@/config/paths';
 import { Toaster } from './error.toast';
 import { useState } from 'react';
 import JoinInput from './Input.end';
+import {
+  Button,
+  Dialog,
+  DialogTrigger,
+  FieldError,
+  Input,
+  Label,
+  Modal,
+  ModalOverlay,
+  TextField,
+} from 'react-aria-components';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+
+const MotionModal = motion(Modal);
+const MotionModalOverlay = motion(ModalOverlay);
+
+type AnimationState = 'unmounted' | 'hidden' | 'visible';
+
 export function Onboarding() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
@@ -44,21 +45,56 @@ export function Onboarding() {
             </span>
           </div>
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant={'search'} className="rounded-md py-2">
-              Create class
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="w-80 sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Create class</DialogTitle>
-            </DialogHeader>
-            <CreateClassOnboarding />
-          </DialogContent>
-        </Dialog>
+        <CreateClass />
       </div>
     </div>
+  );
+}
+function CreateClass() {
+  const [animation, setAnimation] = useState<AnimationState>('unmounted');
+
+  return (
+    <DialogTrigger
+      onOpenChange={(isOpen) => {
+        if (isOpen) {
+          // When opening, directly go from unmounted to visible
+          setAnimation('visible');
+        } else {
+          // When closing, first animate to hidden
+          setAnimation('hidden');
+        }
+      }}
+    >
+      <Button>hello world</Button>
+      {animation !== 'unmounted' && (
+        <MotionModalOverlay
+          className={
+            'fixed inset-0 z-10 flex h-full items-center justify-center bg-background/50'
+          }
+          isDismissable
+          isExiting={animation === 'hidden'}
+          onAnimationComplete={(definition) => {
+            if (definition === 'hidden') {
+              setAnimation('unmounted');
+            }
+          }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
+          }}
+          initial="hidden"
+          animate={animation}
+        >
+          <MotionModal
+            className={'flex items-center justify-center bg-gray-elevation-2'}
+          >
+            <Dialog>
+              <CreateClassOnboarding />
+            </Dialog>
+          </MotionModal>
+        </MotionModalOverlay>
+      )}
+    </DialogTrigger>
   );
 }
 function CreateClassOnboarding() {
@@ -90,79 +126,78 @@ function CreateClassOnboarding() {
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((data) => {
-          createClass.mutate(data);
-        })}
-        className="flex flex-col gap-4"
+    <form
+      onSubmit={form.handleSubmit((data) => {
+        createClass.mutate(data);
+      })}
+      className="flex flex-col gap-4"
+    >
+      <Controller
+        control={form.control}
+        name="name"
+        render={({
+          field: { ref, ...field },
+          fieldState: { error, invalid },
+        }) => (
+          <TextField {...field} isInvalid={invalid} validationBehavior="aria">
+            <Label>Name</Label>
+            <Input ref={ref} />
+            <FieldError>{error?.message}</FieldError>
+          </TextField>
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="username"
+        render={({
+          field: { ref, ...field },
+          fieldState: { error, invalid },
+        }) => (
+          <TextField {...field} isInvalid={invalid}>
+            <Label>username</Label>
+            <Input ref={ref} />
+            <FieldError>{error?.message}</FieldError>
+          </TextField>
+        )}
+      />
+      <div className="flex gap-2">
+        {isPending ? (
+          <>
+            <div className="h-4 w-32 bg-gray-elevation-1" />
+            <div className="h-4 w-32 bg-gray-elevation-1" />
+          </>
+        ) : (
+          <ul className="flex grow flex-wrap justify-between">
+            {data
+              ? data.suggestions.map((username) => (
+                  <li key={username}>
+                    <Button
+                      type="button"
+                      onPress={() => {
+                        handleUsernameSelection(username);
+                      }}
+                      className={cn(
+                        'transition-colors duration-200',
+                        selectedUsername && 'bg-gray-elevation-2',
+                      )}
+                    >
+                      <li>{username}</li>
+                    </Button>
+                  </li>
+                ))
+              : 'no data found'}
+          </ul>
+        )}
+      </div>
+      <Button
+        type="submit"
+        className="w-full"
+        isPending={createClass.isPending}
+        isDisabled={createClass.isPending}
       >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter class name" {...field}></Input>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>username</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter username" {...field}></Input>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="flex gap-2">
-          {isPending ? (
-            <>
-              <Skeleton className="h-4 w-32" />
-              <Skeleton className="h-4 w-32" />
-            </>
-          ) : (
-            <ul className="flex grow flex-wrap justify-between">
-              {data
-                ? data.suggestions.map((username) => (
-                    <li key={username}>
-                      <Button
-                        type="button"
-                        variant={
-                          selectedUsername === username ? 'default' : 'search'
-                        }
-                        size={'sm'}
-                        onClick={() => {
-                          handleUsernameSelection(username);
-                        }}
-                        className="transition-colors duration-200"
-                      >
-                        <li>{username}</li>
-                      </Button>
-                    </li>
-                  ))
-                : 'no data found'}
-            </ul>
-          )}
-        </div>
-        <Button
-          type="submit"
-          className="w-full"
-          isLoading={createClass.isPending}
-          disabled={createClass.isPending}
-        >
-          {createClass.isPending ? 'Redirecting' : 'Create class'}
-        </Button>
-        {createClass.isError && <Toaster message={createClass.error.message} />}
-      </form>
-    </Form>
+        {createClass.isPending ? 'Redirecting' : 'Create class'}
+      </Button>
+      {createClass.isError && <Toaster message={createClass.error.message} />}
+    </form>
   );
 }

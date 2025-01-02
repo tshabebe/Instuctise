@@ -8,7 +8,7 @@ import {
   ListBox,
   ListBoxItem,
 } from 'react-aria-components';
-import { Button } from './button';
+import { Button } from 'react-aria-components';
 import { Icon } from './icon';
 
 const userRoles = [{ name: 'Teacher' }, { name: 'Student' }];
@@ -17,8 +17,6 @@ export function UserRole({ ...props }: SelectProps) {
   return (
     <Select aria-labelledby="user role" {...props}>
       <Button
-        variant={'search'}
-        size={'sm'}
         className={
           'border-gray-elevation-3 bg-gray-elevation-1 text-gray-text-secondary'
         }
