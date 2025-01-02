@@ -5,7 +5,7 @@ export const paths = {
 
   auth: {
     register: {
-      getHref: () => '/auth/login',
+      getHref: () => '/login',
     },
     login: {
       getHref: (userRole: string) => `/login/google?userRole=${userRole}`,
