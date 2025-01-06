@@ -1,8 +1,8 @@
 export default function LandingPageUI() {
   return (
-    <div className="min-h-screen bg-gradient-to-b">
+    <div className="min-h-screen container bg-gradient-to-b">
       <header>
-        <div>header</div>
+        <Header />
       </header>
       <main>
         <section>
@@ -11,4 +11,8 @@ export default function LandingPageUI() {
       </main>
     </div>
   );
+}
+
+function Header() {
+  return <div className="flex">hello world</div>;
 }
