@@ -5,6 +5,7 @@ type Scale = 'gray' | 'orange' | 'green' | 'red';
 
 const generateColorScale = (scale: Scale) => ({
   DEFAULT: `hsl(var(--${scale}-9))`,
+  base: `hsl(var(--${scale}-1))`,
 
   'elevation-1': `hsl(var(--${scale}-2))`,
   'elevation-1-hover': `hsl(var(--${scale}-3))`,

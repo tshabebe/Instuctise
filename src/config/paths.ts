@@ -2,7 +2,17 @@ export const paths = {
   home: {
     getHref: () => '/',
   },
-
+  social: {
+    gitHub: {
+      getHref: () => 'https://github.com/tshabebe/Instuctise',
+    },
+    twitter: {
+      getHref: () => '#',
+    },
+    linkedIn: {
+      getHref: () => '#',
+    },
+  },
   auth: {
     register: {
       getHref: () => '/login',
@@ -21,6 +31,20 @@ export const paths = {
     },
     dashboard: {
       getHref: () => '/home',
+    },
+  },
+  landing: {
+    root: {
+      getHref: () => '/',
+    },
+    pricing: {
+      getHref: () => '/pricing',
+    },
+    FAQ: {
+      getHref: () => '/faq',
+    },
+    blogs: {
+      getHref: () => '/blogs',
     },
   },
 } as const;
