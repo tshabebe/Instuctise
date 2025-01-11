@@ -18,7 +18,7 @@ export function UserRole({ ...props }: SelectProps) {
     <Select aria-labelledby="user role" {...props}>
       <Button
         className={
-          'border-gray-elevation-3 bg-gray-elevation-1 text-gray-text-secondary'
+          'flex gap-2 rounded-md border border-gray-elevation-3 bg-gray-elevation-1 px-2 py-1 text-gray-text-secondary'
         }
       >
         <SelectValue />
