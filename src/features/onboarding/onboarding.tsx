@@ -65,7 +65,13 @@ function CreateClass() {
         }
       }}
     >
-      <Button>hello world</Button>
+      <Button
+        className={
+          'rounded-md bg-gradient-to-r from-orange to-red py-1.5 font-bold text-gray-base'
+        }
+      >
+        Create Class
+      </Button>
       {animation !== 'unmounted' && (
         <MotionModalOverlay
           className={
@@ -86,7 +92,7 @@ function CreateClass() {
           animate={animation}
         >
           <MotionModal
-            className={'flex items-center justify-center bg-gray-elevation-2'}
+            className={'flex items-center justify-center bg-gray-elevation-1'}
           >
             <Dialog>
               <CreateClassOnboarding />
@@ -130,8 +136,9 @@ function CreateClassOnboarding() {
       onSubmit={form.handleSubmit((data) => {
         createClass.mutate(data);
       })}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-4 rounded-md border px-4 py-6"
     >
+      <h2 className="text-lg font-extrabold">New Class</h2>
       <Controller
         control={form.control}
         name="name"
@@ -139,9 +146,19 @@ function CreateClassOnboarding() {
           field: { ref, ...field },
           fieldState: { error, invalid },
         }) => (
-          <TextField {...field} isInvalid={invalid} validationBehavior="aria">
-            <Label>Name</Label>
-            <Input ref={ref} />
+          <TextField
+            {...field}
+            isInvalid={invalid}
+            validationBehavior="aria"
+            className={'flex flex-col'}
+          >
+            <Label className="text-gray-text-secondary">Name</Label>
+            <Input
+              ref={ref}
+              className={
+                'rounded-md border border-gray-elevation-4 bg-gray-elevation-2 px-2 py-1'
+              }
+            />
             <FieldError>{error?.message}</FieldError>
           </TextField>
         )}
@@ -153,9 +170,14 @@ function CreateClassOnboarding() {
           field: { ref, ...field },
           fieldState: { error, invalid },
         }) => (
-          <TextField {...field} isInvalid={invalid}>
-            <Label>username</Label>
-            <Input ref={ref} />
+          <TextField {...field} isInvalid={invalid} className={'flex flex-col'}>
+            <Label className="text-gray-text-secondary">username</Label>
+            <Input
+              ref={ref}
+              className={
+                'rounded-md border border-gray-elevation-4 bg-gray-elevation-2 px-2 py-1'
+              }
+            />
             <FieldError>{error?.message}</FieldError>
           </TextField>
         )}
@@ -167,7 +189,7 @@ function CreateClassOnboarding() {
             <div className="h-4 w-32 bg-gray-elevation-1" />
           </>
         ) : (
-          <ul className="flex grow flex-wrap justify-between">
+          <ul className="flex grow flex-wrap justify-between gap-2">
             {data
               ? data.suggestions.map((username) => (
                   <li key={username}>
@@ -191,7 +213,9 @@ function CreateClassOnboarding() {
       </div>
       <Button
         type="submit"
-        className="w-full"
+        className={
+          'rounded-md bg-gradient-to-r from-orange to-red py-1.5 font-bold text-gray-base'
+        }
         isPending={createClass.isPending}
         isDisabled={createClass.isPending}
       >

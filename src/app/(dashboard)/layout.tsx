@@ -20,7 +20,7 @@ async function DashboardLayout({ children }: { children: ReactNode }) {
     redirect(paths.auth.register.getHref());
   }
 
-  if (!IsOnboardingFinished) {
+  if (IsOnboardingFinished) {
     return <Onboarding />;
   }
 
