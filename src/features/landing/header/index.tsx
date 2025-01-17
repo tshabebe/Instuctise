@@ -36,7 +36,7 @@ function Logo() {
 function Navigation() {
   const pathname = usePathname();
   return (
-    <div className="hidden rounded-lg border border-gray-elevation-2-border bg-gray-elevation-2 px-14 py-1 font-bold sm:flex">
+    <div className="hidden rounded-lg border border-gray-elevation-2-border bg-gray-elevation-2 px-14 py-1 sm:flex">
       <Button
         className={cn(
           pathname === paths.landing.pricing.getHref() &&
@@ -70,7 +70,7 @@ function CallToAction() {
   return (
     <Button
       className={
-        'hidden gap-2 rounded-2xl bg-gradient-to-r from-orange-text-secondary to-red px-4 py-2 font-bold text-background shadow-md shadow-[#0C0909] sm:flex'
+        'hidden gap-2 rounded-2xl bg-gradient-to-r from-orange-text-secondary to-red px-4 py-2 shadow-md shadow-[#0C0909] sm:flex dark:text-black'
       }
     >
       <Link href={paths.auth.register.getHref()} className="flex gap-2">

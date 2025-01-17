@@ -1,5 +1,5 @@
-function BlogsPage() {
-  return <div>BlogsPage</div>;
+function Blogs() {
+  return <div>blogs</div>;
 }
 
-export default BlogsPage;
+export default Blogs;
